@@ -1,26 +1,47 @@
-var cols = 3;
-var rows = 3;
+let r, g, b;
+let tiles = [
+
+];
+
+let height = 200;
+let width = 200;
+let locationX = 0;
+let locationY =0;
 
 function setup() {
-    //setup code here
+  var tile1 = new Tile(22,22,null,null);
+  createCanvas(720, 400);
+  // Pick colors randomly
+  r = random(255);
+  g = random(255);
+  b = random(255);
+  tile.push(locationX,locationY);
+  console.log(tile);
+  console.log(tile[0]);
 
-    createCanvas(300, 300);
 
+console.log(tile1);
+}
 
+function draw() {
+
+  // Draw a circle
+  strokeWeight(2);
+  stroke(r, g, b);
+  fill(r, g, b, 127);
+  rect(240, 250, 200, 200);
 
 }
 
-function draw(){
-  background(51);
+// When the user clicks the mouse
+function mousePressed() {
+  // Check if mouse is inside the circle
 
-  for( var i = 0 ; i < cols; i++){
-    for ( var j = 0; j < rows; j++){
-      var x = i * 100;
-      var y = j * 100;
-
-      stroke(0);
-      fill(255);
-      rect(x,y, 100, 100);
-    }
+  if (mouseX > tile[0].x && mouseX < (tile[0].x+width) && mouseY > tile[0].y && mouseY < (tile[0].y+height)) {
+    // Pick new random color values
+    r = random(255);
+    g = random(255);
+    b = random(255);
   }
+
 }
