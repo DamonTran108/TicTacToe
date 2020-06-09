@@ -7,29 +7,28 @@ const Tile_States = {
 class Tile{
 
 
-  constructor(Xcord,Ycord,length,states,color){
+  constructor(Xcord,Ycord,length,states,tilecolor,symbolcolor){
     this.x = Xcord;
     this.y = Ycord;
-    this.length = length; //square so only need 1
+    this.length = length; //square so only need to store one
 
-    this.state = states;
-
-    this.color = color;
+    this.state = states; //initial state will need to be empty, but for testing sake it's random
+    this.Tile_color = tilecolor; // Will be player color
+    this.Symbol_color = symbolcolor;
 
 
   }
 
   drawMe()
   {
-    //stroke(color);
 
-    fill(this.color);
+    fill(this.Tile_color); //set to currently stored colour
     stroke(0); //draw black outline box
     strokeWeight(3);
+    //draws tile as a rect
     rect(this.getXpos(),this.getYpos(), this.length, this.length);
+    this.drawSymbol(); //draw cross or naut ontop of tile
 
-    this.drawSymbol(); //cross,naut etc
-    console.log(this.state);
   }
 
 
@@ -53,8 +52,8 @@ class Tile{
     //draw 2 lines from each corners and cross them
 
     let offset = this.length/4;
-    stroke(255,255,255); //draw white
-    strokeWeight(6);
+    stroke(this.Symbol_color); //draw white - perimter of tiles
+    strokeWeight(6); //how thicc the line is
 
     line(this.x + offset, this.y + offset, (this.x + this.length - offset), (this.y + this.length - offset));
     line((this.x + this.length - offset), this.y + offset, this.x + offset, (this.y + this.length- offset));
@@ -63,7 +62,7 @@ class Tile{
   drawNaut()
   {
     noFill();
-    stroke(255,255,255); //draw white
+    stroke(this.Symbol_color); //draw white
     strokeWeight(6);
     circle(this.getCenterX(), this.getCenterY(), this.length/2); //x,y , diamater
   }
@@ -89,7 +88,7 @@ class Tile{
 
   updateColour(input_color)
   {
-      this.color = input_color;
+      this.Tile_color = input_color;
   }
 
 getXpos(){
