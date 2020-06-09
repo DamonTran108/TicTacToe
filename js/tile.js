@@ -1,6 +1,7 @@
 const Tile_States = {
   CROSS: 'X',
-  NAUGHT: 'O'
+  NAUGHT: 'O',
+  EMPTY: ' '
 };
 
 class Tile{
@@ -21,7 +22,10 @@ class Tile{
   drawMe()
   {
     //stroke(color);
+
     fill(this.color);
+    stroke(0); //draw black outline box
+    strokeWeight(3);
     rect(this.getXpos(),this.getYpos(), this.length, this.length);
 
     this.drawSymbol(); //cross,naut etc
@@ -37,9 +41,9 @@ class Tile{
           this.drawCross();
           break;
         case Tile_States.NAUGHT:
-          this.drawCross();
+          this.drawNaut();
           break;
-        case null:
+        case Tile_States.EMPTY:
           break;
       }
   }
@@ -59,6 +63,7 @@ class Tile{
   drawNaut()
   {
     noFill();
+    stroke(255,255,255); //draw white
     strokeWeight(6);
     circle(this.getCenterX(), this.getCenterY(), this.length/2); //x,y , diamater
   }

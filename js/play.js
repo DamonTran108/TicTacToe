@@ -21,7 +21,7 @@ function setup() {
 for(let loop=1; loop<=3;loop++){
   for(let row= 1; row <=3; row++){ //constructor(Xcord,Ycord,length,states,color)
     let input_state = random(Tile_States);
-    tiles.push(new Tile(row*200,loop*200,width,get_random_state(),color(200)));
+    tiles.push(new Tile(row*200,loop*200,width, get_random_state() ,color(200)));
   }
 }
   console.log(tiles);
@@ -30,16 +30,19 @@ for(let loop=1; loop<=3;loop++){
 
 function get_random_state()
 {
-  let i = random(3);
 
-  switch (i)
+  let i = Math.floor(Math.random() * Math.floor(3));
+  if (i == 0)
   {
-    case 1:
-      return Tile_States.CROSS;
-    case 2:
-      return Tile_States.NAUGHT;
-    case 3:
-      return null;
+    return Tile_States.NAUGHT
+  }
+  else if (i == 1)
+  {
+    return Tile_States.CROSS
+  }
+  else if (i == 2)
+  {
+    return Tile_States.EMPTY
   }
 }
 function draw() {
