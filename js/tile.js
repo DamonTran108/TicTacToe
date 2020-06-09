@@ -4,19 +4,25 @@ const States = {
 };
 
 class Tile{
-  x = 0;
-   y = 0;
-  state = null;
-  color = null;
 
-  constructor(Xcord,Ycord,States,color){
+
+  constructor(Xcord,Ycord,states,color){
     this.x = Xcord;
     this.y = Ycord;
 
-    this.state = States;
+    this.state = states;
 
     this.color = color;
 
 
   }
+
+
+getXpos(){
+  return this.x;
+}
+
+getYpos(){
+  return this.y;
+}
 }

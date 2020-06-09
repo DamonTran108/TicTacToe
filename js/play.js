@@ -5,22 +5,29 @@ let tiles = [
 
 let height = 200;
 let width = 200;
-let locationX = 0;
-let locationY =0;
+let canvasWidth = 900;
+let canvasHeight = 900;
+
 
 function setup() {
-  var tile1 = new Tile(22,22,null,null);
-  createCanvas(720, 400);
+  let counter = 0;
+  createCanvas(900, 900);
   // Pick colors randomly
   r = random(255);
   g = random(255);
   b = random(255);
-  tile.push(locationX,locationY);
-  console.log(tile);
-  console.log(tile[0]);
 
 
-console.log(tile1);
+for(let loop=1; loop<=3;loop++){
+  for(let row= 1; row <=3; row++){
+    tiles.push(new Tile(row*200,loop*200,null,null));
+  }
+}
+  console.log(tiles);
+
+
+
+
 }
 
 function draw() {
@@ -28,20 +35,24 @@ function draw() {
   // Draw a circle
   strokeWeight(2);
   stroke(r, g, b);
-  fill(r, g, b, 127);
-  rect(240, 250, 200, 200);
+
+  for(let i = 0; i<tiles.length;i++){
+    rect(tiles[i].getXpos(), tiles[i].getYpos(), 200, 200);
+  }
+
+
 
 }
 
 // When the user clicks the mouse
 function mousePressed() {
   // Check if mouse is inside the circle
-
-  if (mouseX > tile[0].x && mouseX < (tile[0].x+width) && mouseY > tile[0].y && mouseY < (tile[0].y+height)) {
-    // Pick new random color values
-    r = random(255);
-    g = random(255);
-    b = random(255);
+  for(let i =0; i<tiles.length;i++){
+    if (mouseX > tiles[i].getXpos() && mouseX < (tiles[i].getXpos()+200) && mouseY > tiles[i].getYpos() && mouseY < (tiles[i].getYpos()+200)) {
+      // Pick new random color values
+      r = random(255);
+      g = random(255);
+      b = random(255);
+    }
   }
-
 }
