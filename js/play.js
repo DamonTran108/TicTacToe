@@ -19,8 +19,8 @@ function setup() {
 
 
 for(let loop=1; loop<=3;loop++){
-  for(let row= 1; row <=3; row++){
-    tiles.push(new Tile(row*200,loop*200,null,null));
+  for(let row= 1; row <=3; row++){ //constructor(Xcord,Ycord,length,states,color)
+    tiles.push(new Tile(row*200,loop*200,width,null,color(200)));
   }
 }
   console.log(tiles);
@@ -36,8 +36,9 @@ function draw() {
   strokeWeight(2);
   stroke(r, g, b);
 
+//Iterate throughout the tile array and draw them
   for(let i = 0; i<tiles.length;i++){
-    rect(tiles[i].getXpos(), tiles[i].getYpos(), 200, 200);
+    tiles[i].drawMe();
   }
 
 
@@ -48,11 +49,8 @@ function draw() {
 function mousePressed() {
   // Check if mouse is inside the circle
   for(let i =0; i<tiles.length;i++){
-    if (mouseX > tiles[i].getXpos() && mouseX < (tiles[i].getXpos()+200) && mouseY > tiles[i].getYpos() && mouseY < (tiles[i].getYpos()+200)) {
-      // Pick new random color values
-      r = random(255);
-      g = random(255);
-      b = random(255);
+    if (tiles[i].isInBounds(mouseX, mouseY)) {
+      tiles[i].updateColour(color(random(255),random(255),random(255)))
     }
   }
 }
