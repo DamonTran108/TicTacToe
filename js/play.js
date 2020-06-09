@@ -20,16 +20,28 @@ function setup() {
 
 for(let loop=1; loop<=3;loop++){
   for(let row= 1; row <=3; row++){ //constructor(Xcord,Ycord,length,states,color)
-    tiles.push(new Tile(row*200,loop*200,width,null,color(200)));
+    let input_state = random(Tile_States);
+    tiles.push(new Tile(row*200,loop*200,width,get_random_state(),color(200)));
   }
 }
   console.log(tiles);
 
-
-
-
 }
 
+function get_random_state()
+{
+  let i = random(3);
+
+  switch (i)
+  {
+    case 1:
+      return Tile_States.CROSS;
+    case 2:
+      return Tile_States.NAUGHT;
+    case 3:
+      return null;
+  }
+}
 function draw() {
 
   // Draw a circle

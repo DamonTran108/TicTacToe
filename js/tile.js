@@ -1,4 +1,4 @@
-const States = {
+const Tile_States = {
   CROSS: 'X',
   NAUGHT: 'O'
 };
@@ -24,6 +24,53 @@ class Tile{
     fill(this.color);
     rect(this.getXpos(),this.getYpos(), this.length, this.length);
 
+    this.drawSymbol(); //cross,naut etc
+    console.log(this.state);
+  }
+
+
+  drawSymbol() //determines which symbol to draw
+  {
+      switch(this.state)
+      {
+        case Tile_States.CROSS:
+          this.drawCross();
+          break;
+        case Tile_States.NAUGHT:
+          this.drawCross();
+          break;
+        case null:
+          break;
+      }
+  }
+
+  drawCross()
+  {
+    //draw 2 lines from each corners and cross them
+
+    let offset = this.length/4;
+    stroke(255,255,255); //draw white
+    strokeWeight(6);
+
+    line(this.x + offset, this.y + offset, (this.x + this.length - offset), (this.y + this.length - offset));
+    line((this.x + this.length - offset), this.y + offset, this.x + offset, (this.y + this.length- offset));
+  }
+
+  drawNaut()
+  {
+    noFill();
+    strokeWeight(6);
+    circle(this.getCenterX(), this.getCenterY(), this.length/2); //x,y , diamater
+  }
+
+  getCenterX()
+  {
+    return (this.x + this.length/2);
+  }
+
+  getCenterY()
+  {
+      return (this.y + this.length/2);
   }
 
   isInBounds(input_x, input_y) //returns boolean
