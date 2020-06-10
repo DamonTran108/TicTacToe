@@ -67,6 +67,12 @@ class Tile{
     circle(this.getCenterX(), this.getCenterY(), this.length/2); //x,y , diamater
   }
 
+
+  canInsertSymbol()
+  {
+    return (this.getState() == Tile_States.EMPTY);
+  }
+
   getCenterX()
   {
     return (this.x + this.length/2);
@@ -88,17 +94,18 @@ class Tile{
 
   updateState(newState)
   {
-    this.states = newState;
+    this.state = newState;
   }
 
   getState()
   {
-    return this.states;
+    return this.state;
   }
   updateColour(input_color)
   {
       this.Tile_color = input_color;
   }
+
 
 getXpos(){
   return this.x;

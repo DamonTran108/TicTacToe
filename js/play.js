@@ -6,9 +6,22 @@ let height = 200;
 let width = 200;
 let canvasWidth = 900;
 let canvasHeight = 900;
+
+//player functionality
+let playerList = [];
 let player = null;
 
+//need to add 1 on the turns for the display
+//starts from 0 so it works easier with the array
+let turnCount = 0;
+
+
 function setup() {
+
+playerList.push(new Player(Tile_States.NAUGHT, color(0,0,255)));
+playerList.push(new Player(Tile_States.CROSS, color(255,0,0)));
+
+
   player = new Player(Tile_States.NAUGHT);
   let counter = 0;
   createCanvas(900, 900);
@@ -53,12 +66,29 @@ function draw() {
 // When the user clicks the mouse
 function mousePressed() {
   // Check if mouse is inside the circle
+
+let currentPlayer = playerList[(turnCount % 2)];
+
   for(let i = 0; i<tiles.length;i++){
     if (tiles[i].isInBounds(mouseX, mouseY)) {
-      tiles[i].updateColour(color(random(255),random(255),random(255)))
-      tiles[i].updateState(player.getSymbol());
+
+      if (tiles[i].canInsertSymbol())
+      {
+      tiles[i].updateColour(currentPlayer.getColor());
+      tiles[i].updateState(currentPlayer.getSymbol());
       console.log(tiles[i].getState());
-      tiles[i].drawSymbol();
+      //need logic to make sure they haven't dont do an illegal move before incrementing
+      turnCount++;
     }
   }
+  }
+
+}
+
+function checkTilesForWinCon()
+{
+  //iterate throughout tiles to check winning patterns
+
+
+  
 }
