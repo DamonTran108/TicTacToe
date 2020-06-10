@@ -6,16 +6,17 @@ let height = 200;
 let width = 200;
 let canvasWidth = 900;
 let canvasHeight = 900;
-
+let player = null;
 
 function setup() {
+  player = new Player(Tile_States.NAUGHT);
   let counter = 0;
   createCanvas(900, 900);
   // Pick colors randomly
 
 for(let loop=1; loop<=3;loop++){
   for(let row= 1; row <=3; row++){ //constructor(Xcord,Ycord,length,states,color)
-    tiles.push(new Tile(row*200,loop*200,width, get_random_state() ,color(200), color(255)));
+    tiles.push(new Tile(row*200,loop*200,width, Tile_States.EMPTY,color(200), color(255)));
   }
 }
 
@@ -55,6 +56,9 @@ function mousePressed() {
   for(let i = 0; i<tiles.length;i++){
     if (tiles[i].isInBounds(mouseX, mouseY)) {
       tiles[i].updateColour(color(random(255),random(255),random(255)))
+      tiles[i].updateState(player.getSymbol());
+      console.log(tiles[i].getState());
+      tiles[i].drawSymbol();
     }
   }
 }

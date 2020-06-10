@@ -34,7 +34,7 @@ class Tile{
 
   drawSymbol() //determines which symbol to draw
   {
-      switch(this.state)
+      switch(this.getState())
       {
         case Tile_States.CROSS:
           this.drawCross();
@@ -86,6 +86,15 @@ class Tile{
     //mouseX > tiles[i].getXpos() && mouseX < (tiles[i].getXpos()+200) && mouseY > tiles[i].getYpos() && mouseY < (tiles[i].getYpos()+200)
   }
 
+  updateState(newState)
+  {
+    this.states = newState;
+  }
+
+  getState()
+  {
+    return this.states;
+  }
   updateColour(input_color)
   {
       this.Tile_color = input_color;
