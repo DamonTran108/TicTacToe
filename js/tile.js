@@ -89,7 +89,6 @@ class Tile{
     input_x < (this.getXpos()+ this.length) &&
     input_y > this.getYpos() &&
     input_y < (this.getYpos()+this.length))
-    //mouseX > tiles[i].getXpos() && mouseX < (tiles[i].getXpos()+200) && mouseY > tiles[i].getYpos() && mouseY < (tiles[i].getYpos()+200)
   }
 
   updateState(newState)
