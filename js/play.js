@@ -20,7 +20,7 @@ let turnCount = 0;
 let grid = null;
 
 function setup() {
-grid = new Grid(200,200, 4, 4);
+grid = new Grid(200,200, 3, 3);
 playerList.push(new Player(Tile_States.NAUGHT, color(0,0,255)));
 playerList.push(new Player(Tile_States.CROSS, color(255,0,0)));
 
