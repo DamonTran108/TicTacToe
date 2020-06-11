@@ -27,15 +27,20 @@ class Grid{
   createGrid()
   {
 
-    for(let t = 0; t < this.rLength; t ++){
-      this.grid.push(emptyArray);
-    }
+    //Creates empty tempArray as a row
+    //Populate row with tiles
+    //Push
+
     for(let loop=0; loop<this.rLength;loop++){
 
-      for(let row= 0; row <this.cLength; row++){ //constructor(Xcord,Ycord,length,states,color)
-        this.grid[loop][row] = new Tile(row*200,loop*200,width, Tile_States.EMPTY,color(200), color(255));
-      }
+      let tempArray = [];
 
+      //populate new temp array with tiles
+      for(let row= 0; row <this.cLength; row++){ //constructor(Xcord,Ycord,length,states,color)
+        tempArray.push(new Tile(row*200,loop*200,width, Tile_States.EMPTY,color(200), color(255)));
+      }
+       //push newly populated array into grid 2d array
+      this.grid.push(tempArray);
     }
   }
 
@@ -45,9 +50,6 @@ class Grid{
   }
   drawGrid()
   {
-
-
-
     for(let loop=0; loop<this.cLength;loop++){
       for(let row= 0; row <this.rLength; row++){ //constructor(Xcord,Ycord,length,states,color)
       this.grid[loop][row].drawMe();
