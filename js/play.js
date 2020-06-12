@@ -105,8 +105,8 @@ function checkRow()
 function checkCol()
 {
 
-  let counter = 0;
-  let colIndex = grid.getIndexV();
+  let counter = 0; // Counter to count how many tiles are same state
+  let colIndex = grid.getIndexV(); // Local variable set to the vertical index of the last tile chosen
   console.log(colIndex);
   //Loop to iterate over the row of the last tile chosen
   for(let i = 0; i < grid.getGrid()[colIndex].length;i++)
@@ -135,13 +135,17 @@ function checkCol()
 
 function checkDiagRight()
 {
-  let counter = 0;
+  let counter = 0; // Counter to count how many tiles are same state
+
+  //Loop to iterate over grid and check whether all tiles are same state in the diagonal going right
   for(let i =0; i < grid.getGrid().length; i++)
   {
+    //If the tiles are the same state then...
     if(grid.getGrid()[i][i].getState() == grid.getGrid()[grid.getIndexH()][grid.getIndexV()].getState())
     {
       counter++
 
+      //increment counter and if the counter hits the same size as the length of the grid then they win
       if(counter == grid.getColLength())
       {
         console.log("A WINCON IS FOUND BY DIAG");
@@ -157,15 +161,18 @@ function checkDiagRight()
 
 function checkDiagLeft()
 {
-  let counter = 0;
-  let i = 0;
+  let counter = 0;//Counter to count how many tiles are the same
+  let i = 0; //Need these loop variables to increment and decrement in the loop to find the diagonal going left
   let j = grid.getGrid().length-1;
 
+  //Loop to find if the tiles are the same state
   while(i < grid.getGrid().length){
+    //If the tiles match... then increment counter
     if(grid.getGrid()[i][j].getState() == grid.getGrid()[grid.getIndexH()][grid.getIndexV()].getState())
     {
       counter++
 
+      //Check if counter hits size of grid... If so they win.
       if(counter == grid.getColLength())
       {
         console.log("A WINCON IS FOUND BY DIAG");
