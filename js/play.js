@@ -66,6 +66,9 @@ function checkTilesForWinCon()
   //easier than using the input tile as a pivot
   this.checkDiagLeft();
 
+  if(turnCount == grid.getGrid().length * grid.getGrid().length && win==false){
+    console.log("DRAW!");
+  }
 
 }
 
