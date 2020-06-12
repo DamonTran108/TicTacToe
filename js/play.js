@@ -79,7 +79,7 @@ function checkRow()
   for(let i = 0; i < grid.getGrid()[rowIndex].length;i++)
   {
     //If the tiles in this row are all the same state then....
-    if(grid.getGrid()[rowIndex][i].getState() == grid.getGrid()[grid.getIndexH()][grid.getIndexV()].getState())
+    if(grid.getGrid()[rowIndex][i].getState() == grid.getTileChosen().getState())
     {
 
       console.log("Row matches");
@@ -112,7 +112,7 @@ function checkCol()
   for(let i = 0; i < grid.getGrid()[colIndex].length;i++)
   {
     //If the tiles in this row are all the same state then....
-    if(grid.getGrid()[i][colIndex].getState() == grid.getGrid()[grid.getIndexH()][grid.getIndexV()].getState())
+    if(grid.getGrid()[i][colIndex].getState() == grid.getTileChosen().getState())
     {
 
       console.log("Col matches");
@@ -141,7 +141,7 @@ function checkDiagRight()
   for(let i =0; i < grid.getGrid().length; i++)
   {
     //If the tiles are the same state then...
-    if(grid.getGrid()[i][i].getState() == grid.getGrid()[grid.getIndexH()][grid.getIndexV()].getState())
+    if(grid.getGrid()[i][i].getState() == grid.getTileChosen().getState())
     {
       counter++
 
@@ -168,7 +168,7 @@ function checkDiagLeft()
   //Loop to find if the tiles are the same state
   while(i < grid.getGrid().length){
     //If the tiles match... then increment counter
-    if(grid.getGrid()[i][j].getState() == grid.getGrid()[grid.getIndexH()][grid.getIndexV()].getState())
+    if(grid.getGrid()[i][j].getState() == grid.getTileChosen().getState())
     {
       counter++
 

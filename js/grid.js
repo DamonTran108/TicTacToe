@@ -1,7 +1,7 @@
 let emptyArray = [,,,];
 let indexH = 0;
 let indexV = 0;
-
+let tile = null;
 class Grid{
   //WHEN DOING STUFF WITH THE ROWS AND COLUMNS
   //FIRST DO THE COLUMN ITERATION
@@ -91,6 +91,7 @@ class Grid{
           {
             indexH = i;
             indexV = j;
+            tile = this.getGrid()[i][j];
             this.getGrid()[i][j].updateColour(i_player.getColor());
             this.getGrid()[i][j].updateState(i_player.getSymbol());
             //console.log("Point X : " +  indexH);
@@ -111,9 +112,7 @@ class Grid{
   }
   getTileChosen()
   {
-    console.log("Point X : " +  indexH);
-    console.log("Point Y : " +  indexV);
-    return indexH,indexV;
+    return tile;
   }
 
   getIndexH()
