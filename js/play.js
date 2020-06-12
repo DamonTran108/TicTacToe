@@ -59,6 +59,7 @@ function checkTilesForWinCon()
 {
 
   this.checkRow();
+  this.checkCol();
   //Determine which row and and column the new tile belongs
   // GO TO THE THE START OF THESE ROWS/COLUMNS and check for win con
   //easier than using the input tile as a pivot
@@ -85,7 +86,7 @@ function checkRow()
       console.log("counter is " + counter);
 
       //If statement to check when all the tiles are the same state then print...
-      if(counter == 3)
+      if(counter == grid.getRowLength())
       {
         console.log("A WINCON IS FOUND BY ROW");
         return true;
@@ -102,6 +103,32 @@ function checkRow()
 
 function checkCol()
 {
+
+  let counter = 0;
+  let colIndex = grid.getIndexV();
+  console.log(colIndex);
+  //Loop to iterate over the row of the last tile chosen
+  for(let i = 0; i < grid.getGrid()[colIndex].length;i++)
+  {
+    //If the tiles in this row are all the same state then....
+    if(grid.getGrid()[i][colIndex].getState() == grid.getGrid()[grid.getIndexH()][grid.getIndexV()].getState())
+    {
+
+      console.log("Col matches");
+      counter++; //Counter variable to count how many states are the same
+      console.log("counter is " + counter);
+
+      //If statement to check when all the tiles are the same state then print...
+      if(counter == grid.getColLength())
+      {
+        console.log("A WINCON IS FOUND BY Col");
+        return true;
+
+      }
+
+    }
+
+  }
 
 }
 
