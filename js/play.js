@@ -9,7 +9,7 @@ let height = 200;
 let width = 200;
 let canvasWidth = 900;
 let canvasHeight = 900;
-
+let win = false;
 //player functionality
 let playerList = [];
 
@@ -90,6 +90,7 @@ function checkRow()
       if(counter == grid.getRowLength())
       {
         console.log("A WINCON IS FOUND BY ROW");
+        win = true;
         return true;
 
       }
@@ -123,6 +124,7 @@ function checkCol()
       if(counter == grid.getColLength())
       {
         console.log("A WINCON IS FOUND BY Col");
+        win = true;
         return true;
 
       }
@@ -149,6 +151,7 @@ function checkDiagRight()
       if(counter == grid.getColLength())
       {
         console.log("A WINCON IS FOUND BY DIAG");
+        win = true;
         return true;
 
       }
@@ -176,6 +179,7 @@ function checkDiagLeft()
       if(counter == grid.getColLength())
       {
         console.log("A WINCON IS FOUND BY DIAG");
+        win = true;
         return true;
 
       }
