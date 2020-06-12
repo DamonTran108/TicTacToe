@@ -19,7 +19,7 @@ let turnCount = 0;
 let grid = null;
 
 function setup() {
-grid = new Grid(100,52,200, 4, 3);
+grid = new Grid(100,52,200, 3, 3);
 //Create the players with their colours and chosen tiles
 playerList.push(new Player(Tile_States.NAUGHT, color(0,0,255)));
 playerList.push(new Player(Tile_States.CROSS, color(255,0,0)));
@@ -48,18 +48,64 @@ let currentPlayer = playerList[(turnCount % 2)];
 //Pass in currentPlayer so it can simply update the tile as soon as it finds interval
 //Would use pointers but javascript
 if (grid.checkGridBounds(mouseX,mouseY,currentPlayer))
-{turnCount++;}
+{
+  turnCount++;
+  this.checkTilesForWinCon();
+}
 
 }
 
 function checkTilesForWinCon()
 {
-  //iterate throughout tiles to check winning patterns
 
+  this.checkRow();
   //Determine which row and and column the new tile belongs
   // GO TO THE THE START OF THESE ROWS/COLUMNS and check for win con
   //easier than using the input tile as a pivot
 
 
+
+}
+
+function checkRow()
+{
+  //Finds whether the row is all the same state.
+  let counter = 0;
+  let rowIndex = grid.getIndexH();
+  console.log(rowIndex);
+  //Loop to iterate over the row of the last tile chosen
+  for(let i = 0; i < grid.getGrid()[rowIndex].length;i++)
+  {
+    //If the tiles in this row are all the same state then....
+    if(grid.getGrid()[rowIndex][i].getState() == grid.getGrid()[grid.getIndexH()][grid.getIndexV()].getState())
+    {
+
+      console.log("Row matches");
+      counter++; //Counter variable to count how many states are the same
+      console.log("counter is " + counter);
+
+      //If statement to check when all the tiles are the same state then print...
+      if(counter == 3)
+      {
+        console.log("A WINCON IS FOUND BY ROW");
+        return true;
+
+      }
+
+    }
+
+  }
+
+
+
+}
+
+function checkCol()
+{
+
+}
+
+function checkDiag()
+{
 
 }

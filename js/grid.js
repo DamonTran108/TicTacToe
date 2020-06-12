@@ -1,4 +1,7 @@
 let emptyArray = [,,,];
+let indexH = 0;
+let indexV = 0;
+
 class Grid{
   //WHEN DOING STUFF WITH THE ROWS AND COLUMNS
   //FIRST DO THE COLUMN ITERATION
@@ -86,9 +89,13 @@ class Grid{
         {
           if (this.getGrid()[i][j].canInsertSymbol()) //check if they can insert the symbol
           {
-
+            indexH = i;
+            indexV = j;
             this.getGrid()[i][j].updateColour(i_player.getColor());
             this.getGrid()[i][j].updateState(i_player.getSymbol());
+            //console.log("Point X : " +  indexH);
+            //console.log("Point Y : " +  indexV);
+            //this.getTileChosen();
             //breaks out of the loop straight away as soon as it's found
             //Prevents algorithm from searching through other itles when the required on is already found
             return true;
@@ -97,9 +104,25 @@ class Grid{
       }
   }
 
+
   //Click doesn't find any tiles so does not do any processes
   return false;
 
   }
+  getTileChosen()
+  {
+    console.log("Point X : " +  indexH);
+    console.log("Point Y : " +  indexV);
+    return indexH,indexV;
+  }
 
+  getIndexH()
+  {
+    return indexH;
+  }
+
+  getIndexV()
+  {
+    return indexV;
+  }
 }
