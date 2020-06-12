@@ -60,10 +60,11 @@ function checkTilesForWinCon()
 
   this.checkRow();
   this.checkCol();
+  this.checkDiagRight();
   //Determine which row and and column the new tile belongs
   // GO TO THE THE START OF THESE ROWS/COLUMNS and check for win con
   //easier than using the input tile as a pivot
-
+  this.checkDiagLeft();
 
 
 }
@@ -83,7 +84,7 @@ function checkRow()
 
       console.log("Row matches");
       counter++; //Counter variable to count how many states are the same
-      console.log("counter is " + counter);
+
 
       //If statement to check when all the tiles are the same state then print...
       if(counter == grid.getRowLength())
@@ -116,7 +117,7 @@ function checkCol()
 
       console.log("Col matches");
       counter++; //Counter variable to count how many states are the same
-      console.log("counter is " + counter);
+
 
       //If statement to check when all the tiles are the same state then print...
       if(counter == grid.getColLength())
@@ -132,7 +133,49 @@ function checkCol()
 
 }
 
-function checkDiag()
+function checkDiagRight()
 {
+  let counter = 0;
+  for(let i =0; i < grid.getGrid().length; i++)
+  {
+    if(grid.getGrid()[i][i].getState() == grid.getGrid()[grid.getIndexH()][grid.getIndexV()].getState())
+    {
+      counter++
+
+      if(counter == grid.getColLength())
+      {
+        console.log("A WINCON IS FOUND BY DIAG");
+        return true;
+
+      }
+    }
+
+  }
+
+
+}
+
+function checkDiagLeft()
+{
+  let counter = 0;
+  let i = 0;
+  let j = grid.getGrid().length-1;
+
+  while(i < grid.getGrid().length){
+    if(grid.getGrid()[i][j].getState() == grid.getGrid()[grid.getIndexH()][grid.getIndexV()].getState())
+    {
+      counter++
+
+      if(counter == grid.getColLength())
+      {
+        console.log("A WINCON IS FOUND BY DIAG");
+        return true;
+
+      }
+
+    }
+    i++;
+    j--;
+  }
 
 }
