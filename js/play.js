@@ -58,9 +58,11 @@ if (grid.checkGridBounds(mouseX,mouseY,currentPlayer))
 function checkTilesForWinCon()
 {
 
-  this.checkRow();
-  this.checkCol();
-  this.checkDiagRight();
+  //this.checkRow();
+  this.checkRowAlt();
+  //this.checkCol();
+  //this.checkDiagRight();
+
   //Determine which row and and column the new tile belongs
   // GO TO THE THE START OF THESE ROWS/COLUMNS and check for win con
   //easier than using the input tile as a pivot
@@ -101,8 +103,61 @@ function checkRow()
     }
 
   }
+}
 
+function checkRowAlt() //alternatitve way to check row win, uses last tile as a pivot andcan be used for bigger grids
+{
+  //3 checks required for row
+  // From the center: checks both sides
+  // From the left, check 2 tiles to the right
+  // From the right, check 2 tiles to the left
 
+  //Will need to check if it's possible. E.g can't check 2 tiles to the left of the left corner
+  //Need to check the index to make sure
+
+  let tilesToWin = 3;
+  let e_tilesToWin = tilesToWin - 1;
+  let rowIndex = grid.getIndexH();
+  let colIndex = grid.getIndexV();
+  let sought_state = Tile_States.NAUGHT; // temp, till be passed into the function
+
+  //Left to right
+  //Xxx
+  if (colIndex <= (grid.getRowLength() - (e_tilesToWin + 1))) //if can check 2 tiles to the left
+  {
+    console.log("Broke into Left to right");
+    let t_counter = 0;
+    for (let i = 0; i < tilesToWin;i++) //move right
+    {
+      if(grid.getGrid()[rowIndex][i].getState() == sought_state)
+      {
+        t_counter++;
+      }
+    }
+    if (t_counter == tilesToWin)
+    {
+        console.log("A WINCON IS FOUND BY ROW FromLeft");
+    }
+  }
+  //right to left
+  //xxX
+  if (colIndex >= (tilesToWin - 1)) //if can check 2 tiles to the right
+  {
+    console.log("Broke into Right to left");
+    let t_counter = 0;
+    for (let i = colIndex; i > (colIndex - tilesToWin);i--) //move right
+    {
+      if(grid.getGrid()[rowIndex][i].getState() == sought_state)
+      {
+        t_counter++;
+      }
+    }
+    if (t_counter == tilesToWin)
+    {
+        console.log("A WINCON IS FOUND BY ROW FromRight");
+    }
+  }
+  console.log("Ri " + rowIndex + "\n" +"Ci " + colIndex + "\n" + "TTW " + tilesToWin);
 
 }
 
