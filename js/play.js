@@ -107,15 +107,16 @@ function checkRow()
 
 function checkRowAlt() //alternatitve way to check row win, uses last tile as a pivot andcan be used for bigger grids
 {
-  //3 checks required for row
+  //2 checks required for row
   // From the center: checks both sides
-  // From the left, check 2 tiles to the right
-  // From the right, check 2 tiles to the left
 
-  //Will need to check if it's possible. E.g can't check 2 tiles to the left of the left corner
-  //Need to check the index to make sure
+  //While the normal check function is enough for standard 3x3 games, a more comple, longer one is required for
+  //the irregular games such as 3 tiles to win on a 5x5 board.
+  //Canot be assumed so it requires more manuel checking and direct exploration of the tile array.
 
   let tilesToWin = 3;
+  let effRowLength = grid.getRowLength() - 1;
+
   let rowIndex = grid.getIndexH();
   let colIndex = grid.getIndexV();
   let sought_state = Tile_States.NAUGHT; // temp, till be passed into the function
@@ -129,6 +130,7 @@ function checkRowAlt() //alternatitve way to check row win, uses last tile as a 
   console.log("Checking left side...")
   if (colIndex > 0) //make sure it's not the leftmost
   {
+    //need to offset initial i so it starts left of the center
     for (let i = colIndex - 1; i >= 0; i-- )
     {
       if(grid.getGrid()[rowIndex][i].getState() == sought_state)
@@ -143,8 +145,26 @@ function checkRowAlt() //alternatitve way to check row win, uses last tile as a 
     }
   }
 
+    console.log("Checking right side...")
+    if (colIndex < (effRowLength)) //-1 for array offset
+    {
+      for (let i = colIndex + 1; i <= effRowLength; i++ )
+      {
+        if(grid.getGrid()[rowIndex][i].getState() == sought_state)
+        {
+          console.log("Tile Found")
+          t_counter++;
+        }
+        else
+        {
+          break; //break out of loop
+        }
+      }
+    }
 
-  console.log("Ri " + rowIndex + "\n" +"Ci " + colIndex + "\n" + "TTW " + tilesToWin);
+
+
+  console.log("Ri " + rowIndex + "\n" +"Ci " + colIndex + "\n" + "TTW " + tilesToWin + "\n" +"TileC " + t_counter);
 
 }
 
