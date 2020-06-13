@@ -116,47 +116,34 @@ function checkRowAlt() //alternatitve way to check row win, uses last tile as a 
   //Need to check the index to make sure
 
   let tilesToWin = 3;
-  let e_tilesToWin = tilesToWin - 1;
   let rowIndex = grid.getIndexH();
   let colIndex = grid.getIndexV();
   let sought_state = Tile_States.NAUGHT; // temp, till be passed into the function
+  let t_counter = 1; //starts off as 1 to include the recently placed tiles
 
-  //Left to right
-  //Xxx
-  if (colIndex <= (grid.getRowLength() - (e_tilesToWin + 1))) //if can check 2 tiles to the left
+  //will count tiles to the left of the 'pivot' and to the right
+  //Will keep going until it meets an incorrect tile or the counter reaches the required tiles
+
+  //each loop will need to start from the middle
+  //Checking to the left of the center
+  console.log("Checking left side...")
+  if (colIndex > 0) //make sure it's not the leftmost
   {
-    console.log("Broke into Left to right");
-    let t_counter = 0;
-    for (let i = 0; i < tilesToWin;i++) //move right
+    for (let i = colIndex - 1; i >= 0; i-- )
     {
       if(grid.getGrid()[rowIndex][i].getState() == sought_state)
       {
+        console.log("Tile Found")
         t_counter++;
       }
-    }
-    if (t_counter == tilesToWin)
-    {
-        console.log("A WINCON IS FOUND BY ROW FromLeft");
-    }
-  }
-  //right to left
-  //xxX
-  if (colIndex >= (tilesToWin - 1)) //if can check 2 tiles to the right
-  {
-    console.log("Broke into Right to left");
-    let t_counter = 0;
-    for (let i = colIndex; i > (colIndex - tilesToWin);i--) //move right
-    {
-      if(grid.getGrid()[rowIndex][i].getState() == sought_state)
+      else
       {
-        t_counter++;
+        break; //break out of loop
       }
     }
-    if (t_counter == tilesToWin)
-    {
-        console.log("A WINCON IS FOUND BY ROW FromRight");
-    }
   }
+
+
   console.log("Ri " + rowIndex + "\n" +"Ci " + colIndex + "\n" + "TTW " + tilesToWin);
 
 }
