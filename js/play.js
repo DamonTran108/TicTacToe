@@ -209,6 +209,73 @@ function checkCol()
 
 }
 
+function checkColAlt()
+{
+  //COPY PASTED FROM Row
+  //NEED TO CHANGE
+  let tilesToWin = 3;
+  let effRowLength = grid.getRowLength() - 1; //offset for arrays beginning at 0
+
+  //recently input tile data
+  let rowIndex = grid.getIndexH();
+  let colIndex = grid.getIndexV();
+  let sought_state = grid.getTileChosen().getState(); //need to make getting desired state cleaner
+  let t_counter = 1; //starts off as 1 to include the center
+
+  //will count tiles to the left of the 'pivot' and to the right
+  //Will keep going until it meets an incorrect tile or the counter reaches the required tiles
+
+  //each loop will need to start from the middle
+  //Checking to the left of the center
+
+  if (colIndex > 0) //make sure it's not the leftmost
+  {
+    console.log("Checking left side...")
+    //need to offset initial i so it starts left of the center
+    for (let i = colIndex - 1; i >= 0; i-- )
+    {
+      if(grid.getGrid()[rowIndex][i].getState() == sought_state)
+      {
+        console.log("Tile Found")
+        t_counter++;
+      }
+      else
+      {
+        break; //break out of loop
+      }
+    }
+  }
+
+
+  if (colIndex < (effRowLength)) //-1 for array offset
+  {
+    console.log("Checking right side...")
+    for (let i = colIndex + 1; i <= effRowLength; i++ )
+    {
+      if(grid.getGrid()[rowIndex][i].getState() == sought_state)
+      {
+        console.log("Tile Found")
+        t_counter++;
+      }
+      else
+      {
+        break; //break out of loop
+      }
+    }
+  }
+
+  //WIN CONDITIONAL
+  if (t_counter >= tilesToWin)
+  {
+    console.log(sought_state + " WINS!");
+  }
+
+
+
+  console.log("Ri " + rowIndex + "\n" +"Ci " + colIndex + "\n" + "TTW " + tilesToWin + "\n" +"TileC " + t_counter);
+
+}
+
 function checkDiagRight()
 {
   let counter = 0; // Counter to count how many tiles are same state
