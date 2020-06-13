@@ -105,7 +105,7 @@ function checkRow()
   }
 }
 
-function checkRowAlt() //alternatitve way to check row win, uses last tile as a pivot andcan be used for bigger grids
+function checkRowAlt(i_sought_state) //alternatitve way to check row win, uses last tile as a pivot andcan be used for bigger grids
 {
   //2 checks required for row
   // From the center: checks both sides
@@ -115,21 +115,23 @@ function checkRowAlt() //alternatitve way to check row win, uses last tile as a 
   //Canot be assumed so it requires more manuel checking and direct exploration of the tile array.
 
   let tilesToWin = 3;
-  let effRowLength = grid.getRowLength() - 1;
+  let effRowLength = grid.getRowLength() - 1; //offset for arrays beginning at 0
 
+  //recently input tile data
   let rowIndex = grid.getIndexH();
   let colIndex = grid.getIndexV();
-  let sought_state = Tile_States.NAUGHT; // temp, till be passed into the function
-  let t_counter = 1; //starts off as 1 to include the recently placed tiles
+  let sought_state = grid.getTileChosen().getState(); //need to make getting desired state cleaner
+  let t_counter = 1; //starts off as 1 to include the center
 
   //will count tiles to the left of the 'pivot' and to the right
   //Will keep going until it meets an incorrect tile or the counter reaches the required tiles
 
   //each loop will need to start from the middle
   //Checking to the left of the center
-  console.log("Checking left side...")
+
   if (colIndex > 0) //make sure it's not the leftmost
   {
+    console.log("Checking left side...")
     //need to offset initial i so it starts left of the center
     for (let i = colIndex - 1; i >= 0; i-- )
     {
@@ -145,22 +147,29 @@ function checkRowAlt() //alternatitve way to check row win, uses last tile as a 
     }
   }
 
+
+  if (colIndex < (effRowLength)) //-1 for array offset
+  {
     console.log("Checking right side...")
-    if (colIndex < (effRowLength)) //-1 for array offset
+    for (let i = colIndex + 1; i <= effRowLength; i++ )
     {
-      for (let i = colIndex + 1; i <= effRowLength; i++ )
+      if(grid.getGrid()[rowIndex][i].getState() == sought_state)
       {
-        if(grid.getGrid()[rowIndex][i].getState() == sought_state)
-        {
-          console.log("Tile Found")
-          t_counter++;
-        }
-        else
-        {
-          break; //break out of loop
-        }
+        console.log("Tile Found")
+        t_counter++;
+      }
+      else
+      {
+        break; //break out of loop
       }
     }
+  }
+
+  //WIN CONDITIONAL
+  if (t_counter >= tilesToWin)
+  {
+    console.log(sought_state + " WINS!");
+  }
 
 
 
