@@ -19,6 +19,7 @@ function setup()
 
     setupMenuBackground(); //nothing rn
     setupUsernameInput(); //create boxes and stuff to input in
+
 }
 
 function draw()
@@ -26,6 +27,7 @@ function draw()
 background(255,100,0)
 
 drawMenuBackground()
+
 
 }
 
@@ -70,4 +72,9 @@ function setupUsernameInput()
 function drawUsernameInput()
 {
 
+}
+
+function execute(){
+  var value = document.getElementById("textbox1").value;
+  console.log(value);
 }
