@@ -10,6 +10,8 @@ let width = 200;
 let canvasWidth = 900;
 let canvasHeight = 900;
 let win = false;
+
+let tilesToWin = 3; //how many tiles in a row that are needed for win condition
 //player functionality
 let playerList = [];
 
@@ -20,7 +22,9 @@ let grid = null;
 
 function setup() {
 grid = new Grid(100,52,200, 3, 3);
+
 //Create the players with their colours and chosen tiles
+//will be passed in from previous page, but for now will be hardcoded
 playerList.push(new Player(Tile_States.NAUGHT, color(0,0,255)));
 playerList.push(new Player(Tile_States.CROSS, color(255,0,0)));
 
@@ -59,8 +63,9 @@ function checkTilesForWinCon()
 {
 
   //this.checkRow();
-  this.checkRowAlt();
+  //this.checkRowAlt();
   //this.checkCol();
+  this.checkColAlt();
   //this.checkDiagRight();
 
   //Determine which row and and column the new tile belongs
@@ -114,7 +119,6 @@ function checkRowAlt(i_sought_state) //alternatitve way to check row win, uses l
   //the irregular games such as 3 tiles to win on a 5x5 board.
   //Canot be assumed so it requires more manuel checking and direct exploration of the tile array.
 
-  let tilesToWin = 3;
   let effRowLength = grid.getRowLength() - 1; //offset for arrays beginning at 0
 
   //recently input tile data
@@ -123,11 +127,11 @@ function checkRowAlt(i_sought_state) //alternatitve way to check row win, uses l
   let sought_state = grid.getTileChosen().getState(); //need to make getting desired state cleaner
   let t_counter = 1; //starts off as 1 to include the center
 
-  //will count tiles to the left of the 'pivot' and to the right
-  //Will keep going until it meets an incorrect tile or the counter reaches the required tiles
+  //////PROCESS/////
+  // Will scan outwards of the placed tile
+  // WEill first need to check that is not an edge tile and will not go out of bounds
+  // And then will iterate
 
-  //each loop will need to start from the middle
-  //Checking to the left of the center
 
   if (colIndex > 0) //make sure it's not the leftmost
   {
@@ -137,7 +141,7 @@ function checkRowAlt(i_sought_state) //alternatitve way to check row win, uses l
     {
       if(grid.getGrid()[rowIndex][i].getState() == sought_state)
       {
-        console.log("Tile Found")
+        //console.log("Tile Found")
         t_counter++;
       }
       else
@@ -155,7 +159,7 @@ function checkRowAlt(i_sought_state) //alternatitve way to check row win, uses l
     {
       if(grid.getGrid()[rowIndex][i].getState() == sought_state)
       {
-        console.log("Tile Found")
+        //console.log("Tile Found")
         t_counter++;
       }
       else
@@ -171,9 +175,7 @@ function checkRowAlt(i_sought_state) //alternatitve way to check row win, uses l
     console.log(sought_state + " WINS!");
   }
 
-
-
-  console.log("Ri " + rowIndex + "\n" +"Ci " + colIndex + "\n" + "TTW " + tilesToWin + "\n" +"TileC " + t_counter);
+  console.log("Coord (" + rowIndex + "," + colIndex + ")" + "\n" +"TileCount in row: (" + t_counter + ")");
 
 }
 
@@ -213,8 +215,7 @@ function checkColAlt()
 {
   //COPY PASTED FROM Row
   //NEED TO CHANGE
-  let tilesToWin = 3;
-  let effRowLength = grid.getRowLength() - 1; //offset for arrays beginning at 0
+  let effColLength = grid.getColLength() - 1; //offset for arrays beginning at 0
 
   //recently input tile data
   let rowIndex = grid.getIndexH();
@@ -228,15 +229,15 @@ function checkColAlt()
   //each loop will need to start from the middle
   //Checking to the left of the center
 
-  if (colIndex > 0) //make sure it's not the leftmost
+  if (rowIndex > 0) //make sure it's not the bottom
   {
     console.log("Checking left side...")
     //need to offset initial i so it starts left of the center
-    for (let i = colIndex - 1; i >= 0; i-- )
+    for (let i = rowIndex - 1; i >= 0; i-- )
     {
-      if(grid.getGrid()[rowIndex][i].getState() == sought_state)
+      if(grid.getGrid()[i][colIndex].getState() == sought_state)
       {
-        console.log("Tile Found")
+        //console.log("Tile Found")
         t_counter++;
       }
       else
@@ -247,14 +248,14 @@ function checkColAlt()
   }
 
 
-  if (colIndex < (effRowLength)) //-1 for array offset
+  if (rowIndex < (effColLength)) //-1 for array offset
   {
     console.log("Checking right side...")
-    for (let i = colIndex + 1; i <= effRowLength; i++ )
+    for (let i = rowIndex + 1; i <= effColLength; i++ )
     {
-      if(grid.getGrid()[rowIndex][i].getState() == sought_state)
+      if(grid.getGrid()[i][colIndex].getState() == sought_state)
       {
-        console.log("Tile Found")
+        //console.log("Tile Found")
         t_counter++;
       }
       else
@@ -270,9 +271,7 @@ function checkColAlt()
     console.log(sought_state + " WINS!");
   }
 
-
-
-  console.log("Ri " + rowIndex + "\n" +"Ci " + colIndex + "\n" + "TTW " + tilesToWin + "\n" +"TileC " + t_counter);
+  console.log("Coord (" + rowIndex + "," + colIndex + ")" + "\n" +"TileCount in Col: (" + t_counter + ")");
 
 }
 
