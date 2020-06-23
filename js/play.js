@@ -353,7 +353,7 @@ function checkDiagAlt()
   /////   check \   //////
   if (rowIndex > 0 && colIndex > 0) //make sure it's not in top left row/corner
   {
-    console.log("Checking upper left")
+    console.log("Checking upper left ")
     //need to offset initial i so it starts left of the center
     let i = rowIndex - 1;
     let j = colIndex - 1;
@@ -372,7 +372,6 @@ function checkDiagAlt()
     }
   }
 
-
   if (rowIndex < effRowLength  && colIndex < effColLength) //make sure it's not in bot left row/corner
   {
     console.log("Checking lower right")
@@ -381,6 +380,31 @@ function checkDiagAlt()
     let j = colIndex + 1;
 
     for (let x = 0; i <= effRowLength && j <= effColLength; i++, j++ )
+    {
+      if(grid.getGrid()[i][j].getState() == sought_state)
+      {
+        t_counter++;
+      }
+      else
+      {
+        break; //break out of loop
+      }
+    }
+  }
+
+
+  //////////////////////////////////////////////////
+  //////////////////////////////////////////////////
+  //////////////////////////////////////////////////
+
+  if (rowIndex > 0 && colIndex < effColLength) //make sure it's not in top right row/corner
+  {
+    console.log("Checking upper right")
+    //need to offset initial i so it starts left of the center
+    let i = rowIndex - 1;
+    let j = colIndex + 1;
+
+    for (let x = 0; i >= 0 && j <= effColLength; i--, j++ )
     {
       if(grid.getGrid()[i][j].getState() == sought_state)
       {
@@ -394,8 +418,25 @@ function checkDiagAlt()
     }
   }
 
+  if (rowIndex < effRowLength && colIndex > 0) //make sure it's not in bot left row/corner
+  {
+    console.log("Checking lower left")
+    //need to offset initial i so it starts left of the center
+    let i = rowIndex + 1;
+    let j = colIndex - 1;
 
-
+    for (let x = 0; i <= effRowLength && j >= 0; i++, j-- )
+    {
+      if(grid.getGrid()[i][j].getState() == sought_state)
+      {
+        t_counter++;
+      }
+      else
+      {
+        break; //break out of loop
+      }
+    }
+  }
 
 
   //check /Z
