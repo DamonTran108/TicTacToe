@@ -63,15 +63,13 @@ function checkTilesForWinCon()
 {
 
   //this.checkRow();
-  //this.checkRowAlt();
   //this.checkCol();
-  this.checkColAlt();
   //this.checkDiagRight();
+  //this.checkDiagLeft();
 
-  //Determine which row and and column the new tile belongs
-  // GO TO THE THE START OF THESE ROWS/COLUMNS and check for win con
-  //easier than using the input tile as a pivot
-  this.checkDiagLeft();
+  //this.checkRowAlt();
+  //this.checkColAlt();
+  this.checkDiagAlt();
 
   if(turnCount == grid.getGrid().length * grid.getGrid().length && win==false){
     console.log("DRAW!");
@@ -337,6 +335,7 @@ function checkDiagAlt()
   //COPY PASTED FROM Row
   //NEED TO CHANGE
   let effColLength = grid.getColLength() - 1; //offset for arrays beginning at 0
+  let effRowLength = grid.getRowLength() - 1;
 
   //recently input tile data
   let rowIndex = grid.getIndexH();
@@ -350,15 +349,18 @@ function checkDiagAlt()
 
   //First need to check if the position can even have a diagonal win con
   //need to do some fatty math
-  
 
-  if (rowIndex > 0) //make sure it's not the bottom
+  /////   check \   //////
+  if (rowIndex > 0 && colIndex > 0) //make sure it's not in top left row/corner
   {
-    console.log("Checking left side...")
+    console.log("Checking upper left")
     //need to offset initial i so it starts left of the center
-    for (let i = rowIndex - 1; i >= 0; i-- )
+    let i = rowIndex - 1;
+    let j = colIndex - 1;
+
+    for (let x = 0; i >= 0 && j >=0; i--, j-- )
     {
-      if(grid.getGrid()[i][colIndex].getState() == sought_state)
+      if(grid.getGrid()[i][j].getState() == sought_state)
       {
         //console.log("Tile Found")
         t_counter++;
@@ -371,12 +373,16 @@ function checkDiagAlt()
   }
 
 
-  if (rowIndex < (effColLength)) //-1 for array offset
+  if (rowIndex < effRowLength  && colIndex < effColLength) //make sure it's not in bot left row/corner
   {
-    console.log("Checking right side...")
-    for (let i = rowIndex + 1; i <= effColLength; i++ )
+    console.log("Checking lower right")
+    //need to offset initial i so it starts left of the center
+    let i = rowIndex + 1;
+    let j = colIndex + 1;
+
+    for (let x = 0; i <= effRowLength && j <= effColLength; i++, j++ )
     {
-      if(grid.getGrid()[i][colIndex].getState() == sought_state)
+      if(grid.getGrid()[i][j].getState() == sought_state)
       {
         //console.log("Tile Found")
         t_counter++;
@@ -387,6 +393,30 @@ function checkDiagAlt()
       }
     }
   }
+
+
+
+
+
+  //check /Z
+
+
+  // if (rowIndex < (effColLength)) //-1 for array offset
+  // {
+  //   console.log("Checking right side...")
+  //   for (let i = rowIndex + 1; i <= effColLength; i++ )
+  //   {
+  //     if(grid.getGrid()[i][colIndex].getState() == sought_state)
+  //     {
+  //       //console.log("Tile Found")
+  //       t_counter++;
+  //     }
+  //     else
+  //     {
+  //       break; //break out of loop
+  //     }
+  //   }
+  // }
 
   //WIN CONDITIONAL
   if (t_counter >= tilesToWin)
@@ -394,7 +424,7 @@ function checkDiagAlt()
     console.log(sought_state + " WINS!");
   }
 
-  console.log("Coord (" + rowIndex + "," + colIndex + ")" + "\n" +"TileCount in Col: (" + t_counter + ")");
+  console.log("Coord (" + rowIndex + "," + colIndex + ")" + "\n" +"TileCount in diag: (" + t_counter + ")");
 
 
 }
