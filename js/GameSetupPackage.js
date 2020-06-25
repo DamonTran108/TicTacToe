@@ -1,7 +1,7 @@
 class GameSetupPackage
 {
 
-  constructor(player1, player2, matchCount, roundTimer)
+  constructor(player1, player2, matchCount, roundTimer, tilesToWin, rowLength, colLength)
   {
     //players data
     this.player1 = player1;
@@ -10,9 +10,9 @@ class GameSetupPackage
     this.matchCount = matchCount; //1,3,5,7,9,11
     this.roundTimer = roundTimer; //if 0 just ignore
 
-    this.tilesToWin = 3;
-    this.xtiles = 3
-    this.ytiles = 3
+    this.tilesToWin = tilesToWin;
+    this.rowLength = rowLength;
+    this.colLength = colLength;
   }
 
 }
