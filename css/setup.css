@@ -1,0 +1,35 @@
+label {
+    width:180px;
+    clear:left;
+    text-align:right;
+    padding-right:100px;
+    padding-left: 20px;
+}
+
+
+.player1Container
+{
+  display: block;
+  padding-right: 40px;
+  padding-top: 20px;
+  padding-left: 20px;
+  background-color: lightblue;
+}
+
+.player2Container
+{
+  display: block;
+  padding-right: 40px;
+  padding-top: 20px;
+  padding-left: 20px;
+  background-color: lightblue;
+}
+
+#ColorPicker{
+ width:150px;
+ height:18.5px;
+}
+
+#colorOpt2{
+ width:150px;
+}

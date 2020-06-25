@@ -1,12 +1,39 @@
 <!DOCTYPE html>
+
+
 <html>
 <head>
+	<link rel="stylesheet" type="text/css" href="C:\Users\Damon\Desktop\Github\TicTacToe\css\setup.css">
 	<meta charset="utf-8">
 
   <script src="../js/p5.min.js"></script>
-	<script src="../js/setup.js"></script>
+	<script src="../js/GameSetupPackage.js"></script>
 
-	<input id="textbox1" type="text" value = "Hentai" />
+
+<div class = "label">
+	<label for="namebox1">Player Name</label>
+	<label for="symbolbox1">Symbol</label>
+	<label for="symbolbox1" padding-left: 200px; >Colour</label>
+
+
+</div>
+
+<div class =  "player1Container">
+	<input id="namebox1" type="text" value = "" />
+	<input id="symbolbox1" type="text" value = "" />
+	<input name="ColorPicker" id = "ColorPicker" type="color"/>
+
+
+</div>
+
+<div class =  "player2Container">
+	<input id="namebox2" type="text" value = "" />
+	<input id="symbolbox2" type="text" value = "" />
+	<input name="ColorPicker" id = "ColorPicker" type="color"/>
+
+
+</div>
+
 	<input name="buttonExecute" onclick="execute()" type="button" value="Execute" />
 
 </head>
