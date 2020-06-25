@@ -7,6 +7,7 @@
 
 let height = 200;
 let width = 200;
+let max_g_length = 700; //how long the grid can be, used to dynamically resize the tiles
 let canvasWidth = 900;
 let canvasHeight = 900;
 let win = false;
@@ -20,19 +21,36 @@ let playerList = [];
 let turnCount = 0;
 let grid = null;
 
-function setup() {
-grid = new Grid(100,52,200, 3, 3);
-
-//Create the players with their colours and chosen tiles
-//will be passed in from previous page, but for now will be hardcoded
-playerList.push(new Player(Tile_States.NAUGHT, color(0,0,255)));
-playerList.push(new Player(Tile_States.CROSS, color(255,0,0)));
+function setup(i_GameSetupPackage) {
 
 createCanvas(900, 900);
 
-console.log(grid);
+if (i_GameSetupPackage != null) // has passed in a data package, custom input
+{
+
+  let dynamic_size = max_g_length / (Math.max(i_GameSetupPackage.rowLength, i_GameSetupPackage.colLength));
+  //constructor(xCord,yCord,i_t_length, rowLength, colLength)
+  grid = new Grid(100,52, dynamic_size , i_GameSetupPackage.rowLength ,i_GameSetupPackage.colLength);
+  playerList.push(i_GameSetupPackage.player1);
+  playerList.push(i_GameSetupPackage.player2);
+
+  tilesToWin = i_GameSetupPackage.tilesToWin;
+}
+else //default, mainly for testing
+{
+  let dynamic_size = (max_g_length / 10);
+  grid = new Grid(100,52,dynamic_size, 10, 10);
+
+  //Create the players with their colours and chosen tiles
+  //will be passed in from previous page, but for now will be hardcoded
+  playerList.push(new Player(Tile_States.NAUGHT, color(0,0,255)));
+  playerList.push(new Player(Tile_States.CROSS, color(255,0,0)));
+
 }
 
+
+console.log(grid);
+}
 
 
 function draw() {
@@ -67,8 +85,8 @@ function checkTilesForWinCon()
   //this.checkDiagRight();
   //this.checkDiagLeft();
 
-  //this.checkRowAlt();
-  //this.checkColAlt();
+  this.checkRowAlt();
+  this.checkColAlt();
   this.checkDiagAlt();
 
   if(turnCount == grid.getGrid().length * grid.getGrid().length && win==false){
@@ -133,7 +151,7 @@ function checkRowAlt(i_sought_state) //alternatitve way to check row win, uses l
 
   if (colIndex > 0) //make sure it's not the leftmost
   {
-    console.log("Checking left side...")
+    //console.log("Checking left side...")
     //need to offset initial i so it starts left of the center
     for (let i = colIndex - 1; i >= 0; i-- )
     {
@@ -152,7 +170,7 @@ function checkRowAlt(i_sought_state) //alternatitve way to check row win, uses l
 
   if (colIndex < (effRowLength)) //-1 for array offset
   {
-    console.log("Checking right side...")
+    //console.log("Checking right side...")
     for (let i = colIndex + 1; i <= effRowLength; i++ )
     {
       if(grid.getGrid()[rowIndex][i].getState() == sought_state)
@@ -190,7 +208,6 @@ function checkCol()
     if(grid.getGrid()[i][colIndex].getState() == grid.getTileChosen().getState())
     {
 
-      console.log("Col matches");
       counter++; //Counter variable to count how many states are the same
 
 
@@ -229,7 +246,6 @@ function checkColAlt()
 
   if (rowIndex > 0) //make sure it's not the bottom
   {
-    console.log("Checking left side...")
     //need to offset initial i so it starts left of the center
     for (let i = rowIndex - 1; i >= 0; i-- )
     {
@@ -248,7 +264,7 @@ function checkColAlt()
 
   if (rowIndex < (effColLength)) //-1 for array offset
   {
-    console.log("Checking right side...")
+    //console.log("Checking right side...")
     for (let i = rowIndex + 1; i <= effColLength; i++ )
     {
       if(grid.getGrid()[i][colIndex].getState() == sought_state)
@@ -353,7 +369,7 @@ function checkDiagAlt()
   /////   check \   //////
   if (rowIndex > 0 && colIndex > 0) //make sure it's not in top left row/corner
   {
-    console.log("Checking upper left ")
+    //console.log("Checking upper left ")
     //need to offset initial i so it starts left of the center
     let i = rowIndex - 1;
     let j = colIndex - 1;
@@ -374,7 +390,7 @@ function checkDiagAlt()
 
   if (rowIndex < effRowLength  && colIndex < effColLength) //make sure it's not in bot left row/corner
   {
-    console.log("Checking lower right")
+    //console.log("Checking lower right")
     //need to offset initial i so it starts left of the center
     let i = rowIndex + 1;
     let j = colIndex + 1;
@@ -399,7 +415,7 @@ function checkDiagAlt()
 
   if (rowIndex > 0 && colIndex < effColLength) //make sure it's not in top right row/corner
   {
-    console.log("Checking upper right")
+    //console.log("Checking upper right")
     //need to offset initial i so it starts left of the center
     let i = rowIndex - 1;
     let j = colIndex + 1;
@@ -420,7 +436,7 @@ function checkDiagAlt()
 
   if (rowIndex < effRowLength && colIndex > 0) //make sure it's not in bot left row/corner
   {
-    console.log("Checking lower left")
+    //console.log("Checking lower left")
     //need to offset initial i so it starts left of the center
     let i = rowIndex + 1;
     let j = colIndex - 1;
@@ -438,26 +454,6 @@ function checkDiagAlt()
     }
   }
 
-
-  //check /Z
-
-
-  // if (rowIndex < (effColLength)) //-1 for array offset
-  // {
-  //   console.log("Checking right side...")
-  //   for (let i = rowIndex + 1; i <= effColLength; i++ )
-  //   {
-  //     if(grid.getGrid()[i][colIndex].getState() == sought_state)
-  //     {
-  //       //console.log("Tile Found")
-  //       t_counter++;
-  //     }
-  //     else
-  //     {
-  //       break; //break out of loop
-  //     }
-  //   }
-  // }
 
   //WIN CONDITIONAL
   if (t_counter >= tilesToWin)
