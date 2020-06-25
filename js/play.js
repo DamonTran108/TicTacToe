@@ -5,12 +5,16 @@
 //Large amount of control over the grid and stuff (4x4 or 5x5 grid)
 //But is not effective for tictactoe as it is based around around a 3x3 grid
 
-let height = 200;
-let width = 200;
+let canvasWidth = 1280;
+let canvasHeight = 720;
+
 let max_g_length = 700; //how long the grid can be, used to dynamically resize the tiles
-let canvasWidth = 900;
-let canvasHeight = 900;
+
+let grid_pos_x = canvasWidth/2 - max_g_length/2;
+let grid_pos_y = canvasHeight/2 - max_g_length/2;;
+
 let win = false;
+let isSimple = true;
 
 let tilesToWin = 3; //how many tiles in a row that are needed for win condition
 //player functionality
@@ -21,16 +25,19 @@ let playerList = [];
 let turnCount = 0;
 let grid = null;
 
+
 function setup(i_GameSetupPackage) {
 
-createCanvas(900, 900);
+createCanvas(canvasWidth, canvasHeight);
+background(255,0,0);
 
 if (i_GameSetupPackage != null) // has passed in a data package, custom input
 {
 
   let dynamic_size = max_g_length / (Math.max(i_GameSetupPackage.rowLength, i_GameSetupPackage.colLength));
+
   //constructor(xCord,yCord,i_t_length, rowLength, colLength)
-  grid = new Grid(100,52, dynamic_size , i_GameSetupPackage.rowLength ,i_GameSetupPackage.colLength);
+  grid = new Grid(grid_pos_x,grid_pos_y, dynamic_size , i_GameSetupPackage.rowLength ,i_GameSetupPackage.colLength);
   playerList.push(i_GameSetupPackage.player1);
   playerList.push(i_GameSetupPackage.player2);
 
@@ -38,8 +45,8 @@ if (i_GameSetupPackage != null) // has passed in a data package, custom input
 }
 else //default, mainly for testing
 {
-  let dynamic_size = (max_g_length / 10);
-  grid = new Grid(100,52,dynamic_size, 10, 10);
+  let dynamic_size = (max_g_length / 5);
+  grid = new Grid(grid_pos_x,grid_pos_y,dynamic_size, 5, 5);
 
   //Create the players with their colours and chosen tiles
   //will be passed in from previous page, but for now will be hardcoded
@@ -48,6 +55,15 @@ else //default, mainly for testing
 
 }
 
+//check which algorithm to use
+if (grid.rowLength == grid.colLength)
+{
+  isSimple = true;
+}
+else
+{
+  isSimple = false;
+}
 
 console.log(grid);
 }
@@ -80,14 +96,21 @@ if (grid.checkGridBounds(mouseX,mouseY,currentPlayer))
 function checkTilesForWinCon()
 {
 
-  //this.checkRow();
-  //this.checkCol();
-  //this.checkDiagRight();
-  //this.checkDiagLeft();
 
-  this.checkRowAlt();
-  this.checkColAlt();
-  this.checkDiagAlt();
+  if (isSimple)
+  {
+    this.checkRow();
+    this.checkCol();
+    this.checkDiagRight();
+    this.checkDiagLeft();
+  }
+  else
+  {
+    this.checkRowAlt();
+    this.checkColAlt();
+    this.checkDiagAlt();
+  }
+
 
   if(turnCount == grid.getGrid().length * grid.getGrid().length && win==false){
     console.log("DRAW!");
