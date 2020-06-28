@@ -14,8 +14,20 @@ class Tile{
 
     this.state = states; //initial state will need to be empty, but for testing sake it's random
     this.Tile_color = tilecolor; // Will be player color
+    this.default_color = tilecolor; //first colour
     this.Symbol_color = symbolcolor;
 
+
+  }
+
+
+  resetTile()
+  {
+
+    this.state = Tile_States.EMPTY;
+    this.Tile_color = this.default_color;
+    //symbol color will be updated anyway when clicked on
+    //this.Symbol_color = ;
 
   }
 

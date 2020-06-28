@@ -5,13 +5,13 @@
 //Large amount of control over the grid and stuff (4x4 or 5x5 grid)
 //But is not effective for tictactoe as it is based around around a 3x3 grid
 
-let canvasWidth = 1280;
-let canvasHeight = 720;
+//1280,720
+//testing, will dynamically create board absed on monitor size
+//Will start as 0 and set in setup
+let canvasWidth, canvasHeight = 0;
+let grid_pos_x , grid_pos_y = 0;
 
-let max_g_length = 700; //how long the grid can be, used to dynamically resize the tiles
-
-let grid_pos_x = canvasWidth/2 - max_g_length/2;
-let grid_pos_y = canvasHeight/2 - max_g_length/2;;
+let max_g_length = 500; //how long the grid can be, used to dynamically resize the tiles
 
 let win = false;
 let isSimple = true;
@@ -28,7 +28,16 @@ let grid = null;
 
 function setup(i_GameSetupPackage) {
 
+//use system library to get user's window dimensions.
+canvasWidth = windowWidth;
+canvasHeight = windowHeight;
+
+//Create canvas based on size. Only a portion will hold the important info
 createCanvas(canvasWidth, canvasHeight);
+
+grid_pos_x = canvasWidth/2 - max_g_length/2;
+grid_pos_y = canvasHeight/2 - max_g_length/2;
+
 background(255,0,0);
 
 if (i_GameSetupPackage != null) // has passed in a data package, custom input

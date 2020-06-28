@@ -101,15 +101,35 @@ class Grid{
             //Prevents algorithm from searching through other itles when the required on is already found
             return true;
           }
+          else
+          {
+            this.clearGridStates();
+          }
         }
       }
-  }
-
-
+    }
   //Click doesn't find any tiles so does not do any processes
   return false;
-
   }
+
+  clearGridStates()
+  {
+      //Resets all of the tiles back to nothing
+      // could use the constructor but would require a ot of passed info
+
+      //Iterate through the whole grid and change the symbol state to null
+      //colour also needs to be changed
+      //But for data storage reasons it will be simply set to null
+    for(let i = 0; i < this.getColLength(); i++)
+    {
+      for(let j = 0; j< this.getRowLength();j++)
+      {
+        //this.getGrid()[i][j].updateColour(null);
+        this.getGrid()[i][j].resetTile();
+      }
+    }
+  }
+
   getTileChosen()
   {
     return tile;
