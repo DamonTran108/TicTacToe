@@ -14,7 +14,7 @@ class Tile{
 
     this.state = states; //initial state will need to be empty, but for testing sake it's random
     this.Tile_color = tilecolor; // Will be player color
-    this.default_color = tilecolor; //first colour
+    this.default_color = tilecolor; //initial color before being overidden. //inefficient to store in tile so need to use it more to justify it
     this.Symbol_color = symbolcolor;
 
 
@@ -24,8 +24,8 @@ class Tile{
   resetTile()
   {
 
-    this.state = Tile_States.EMPTY;
-    this.Tile_color = this.default_color;
+    this.state = Tile_States.EMPTY; //reset state
+    this.Tile_color = this.default_color; //back to initial colour (usually grey)
     //symbol color will be updated anyway when clicked on
     //this.Symbol_color = ;
 
@@ -36,7 +36,7 @@ class Tile{
 
     fill(this.Tile_color); //set to currently stored colour
     stroke(0); //draw black outline box
-    strokeWeight(3);
+    strokeWeight(4);
     //draws tile as a rect
     rect(this.getXpos(),this.getYpos(), this.length, this.length);
     this.drawSymbol(); //draw cross or naut ontop of tile

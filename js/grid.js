@@ -49,14 +49,34 @@ class Grid{
     //Populate row with tiles
     //Push
 
+    //let tile_color_light = color(200);
+    //let tile_color_dark = color(100);
+
+    //will need to flip between colours create a contrasting grid
+    //give the contrasting tile effect
+    let col_array = [];
+    let col_counter = 0;
+    col_array.push(color(255)); //light
+    col_array.push(color(100)); //dark
+
+
+    //% 2
     for(let loop=0; loop<this.cLength;loop++){
 
       let tempArray = [];
 
       //populate new temp array with tiles
+      //need to alternate colours
       for(let row= 0; row <this.rLength; row++){ //constructor(Xcord,Ycord,length,states,color)
-        tempArray.push(new Tile((row*this.t_length +this.x) ,(loop*this.t_length+this.y),this.t_length, Tile_States.EMPTY,color(200), color(255)));
+        tempArray.push(new Tile((row*this.t_length +this.x) ,(loop*this.t_length+this.y),this.t_length, Tile_States.EMPTY,col_array[col_counter % 2], color(255)));
+        col_counter++; //increment
       }
+      //need to offset the grid contrasting if the grid is even
+      if ((this.rLength % 2) == 0)
+      {
+        col_counter++;
+      }
+
        //push newly populated array into grid 2d array
       this.grid.push(tempArray);
     }
@@ -118,8 +138,6 @@ class Grid{
       // could use the constructor but would require a ot of passed info
 
       //Iterate through the whole grid and change the symbol state to null
-      //colour also needs to be changed
-      //But for data storage reasons it will be simply set to null
     for(let i = 0; i < this.getColLength(); i++)
     {
       for(let j = 0; j< this.getRowLength();j++)
