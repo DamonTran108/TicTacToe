@@ -27,6 +27,47 @@ let grid = null;
 
 let gs = null;
 
+//Timer stuff
+//for now timers are in seconds, may add milliseconds
+let round_timer_limit = 10; //-1 is exit value
+let round_counter = 0;
+let overall_timer = 0;
+
+
+function increment_timers()
+{
+  round_counter++;
+  overall_timer++;
+
+}
+
+function check_round_timer() //simply checks if the round timer has gone to 0 or not
+{
+  if (round_timer <= round_counter)
+    {return true;}
+  else
+    {return false;}
+}
+
+function draw_timers()
+{
+  //check if there's even a round timer before starting to draw it
+  if (round_timer_limit > 0)
+  {
+    let output = round_timer_limit - round_counter;
+
+    textSize(32);
+    text(output, 20,300);
+  }
+
+
+}
+
+function resetTimers()
+{
+  current_round_timer = 0;
+}
+
 function setup(i_GameSetupPackage) {
 
 
@@ -78,6 +119,17 @@ else
   isSimple = false;
 }
 
+
+
+/////TIMER stuff
+//setTimeout(function, milliseconds)
+//setInterval(function, milliseconds)
+
+setInterval(increment_timers ,1000) //process the function every second
+
+
+
+
 console.log(grid);
 }
 
@@ -85,8 +137,13 @@ console.log(grid);
 function draw() {
 //Iterate throughout the tile array and draw them
 
+// NEED THIS TO REDRAW BACKGROUND EVERY FRAME, OR THE TEXT JUST DRAWS ONTOP OF ITSELF
+// God knows how it worked without this before
+  background(220);
+
   grid.drawGrid();
 
+  this.draw_timers();
 }
 
 // When the user clicks the mouse
