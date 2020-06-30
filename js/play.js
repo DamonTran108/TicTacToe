@@ -57,7 +57,7 @@ if (i_GameSetupPackage != null) // has passed in a data package, custom input
 else //default, mainly for testing
 {
   let dynamic_size = (max_g_length / 5);
-  grid = new Grid(grid_pos_x,grid_pos_y,dynamic_size, 5, 5);
+  grid = new Grid(grid_pos_x,grid_pos_y,dynamic_size, document.getElementById("row").innerHTML = localStorage.getItem("rowL"),document.getElementById("col").innerHTML = localStorage.getItem("colL"));
 
   //Create the players with their colours and chosen tiles
   //will be passed in from previous page, but for now will be hardcoded

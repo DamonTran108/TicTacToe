@@ -33,14 +33,19 @@ function executes()
   var player1Symbol = document.getElementById('symbols1').value;
   var player2Symbol = document.getElementById('symbols2').value;
 
+  var row = document.getElementById('rowL').value;
+  var col = document.getElementById('colL').value;
 
   // If they have the same symbol selected then dont do the rest... Else...
   if(player1Symbol == player2Symbol)
   {
     console.log("they're the same!");
   }else{
+ localStorage.setItem("colL", row);
+ localStorage.setItem("rowL", col);
+
  localStorage.setItem("symbol1", player1Symbol);
- localStorage.setItem("symbol2", player2Symbol);    
+ localStorage.setItem("symbol2", player2Symbol);
  localStorage.setItem("lastname", "Smith");
 
  player1 = document.getElementById('namebox1').value;
