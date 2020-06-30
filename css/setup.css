@@ -25,11 +25,13 @@ label {
   background-color: lightblue;
 }
 
-#ColorPicker{
+#ColorPicker1{
  width:150px;
  height:18.5px;
 }
 
-#colorOpt2{
+#ColorPicker2{
  width:150px;
+ height:18.5px;
+
 }
