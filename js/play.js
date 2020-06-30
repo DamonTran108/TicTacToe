@@ -43,7 +43,7 @@ function increment_timers()
 
 function check_round_timer() //simply checks if the round timer has gone to 0 or not
 {
-  if (round_timer <= round_counter)
+  if (round_timer_limit <= round_counter)
     {return true;}
   else
     {return false;}
@@ -65,7 +65,7 @@ function draw_timers()
 
 function resetTimers()
 {
-  current_round_timer = 0;
+  round_counter = 0;
 }
 
 function setup(i_GameSetupPackage) {
@@ -135,6 +135,11 @@ console.log(grid);
 
 
 function draw() {
+
+//update all relevent ingame logic that is based on time
+//called "update_game" so the naming does not clash with existing update functions
+update_game();
+
 //Iterate throughout the tile array and draw them
 
 // NEED THIS TO REDRAW BACKGROUND EVERY FRAME, OR THE TEXT JUST DRAWS ONTOP OF ITSELF
@@ -144,6 +149,13 @@ function draw() {
   grid.drawGrid();
 
   this.draw_timers();
+}
+
+
+function update_game()
+{
+  if (check_round_timer())
+    {resetTimers();}
 }
 
 // When the user clicks the mouse
