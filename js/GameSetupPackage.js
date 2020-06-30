@@ -36,6 +36,8 @@ function executes()
   var row = document.getElementById('rowL').value;
   var col = document.getElementById('colL').value;
 
+  var col1 = document.getElementById('ColorPicker1').value;
+  var col2 = document.getElementById('ColorPicker2').value;
   // If they have the same symbol selected then dont do the rest... Else...
   if(player1Symbol == player2Symbol)
   {
@@ -43,6 +45,9 @@ function executes()
   }else{
  localStorage.setItem("colL", row);
  localStorage.setItem("rowL", col);
+
+ localStorage.setItem("color1", col1);
+ localStorage.setItem("color2", col2);
 
  localStorage.setItem("symbol1", player1Symbol);
  localStorage.setItem("symbol2", player2Symbol);
