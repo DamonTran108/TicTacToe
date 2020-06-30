@@ -52,15 +52,58 @@ function check_round_timer() //simply checks if the round timer has gone to 0 or
 function draw_timers()
 {
   //check if there's even a round timer before starting to draw it
+  //Looks like text draws from the bottom right corner? jesus
+
+  //// TODO:
+  //Center the timer text
+  //better strings for each timer
+  //Find a good place for the timer
+  //Maybe add red warning colour as it gets the that last few seconds
+
+  //draw round timer
   if (round_timer_limit > 0)
   {
-    let output = round_timer_limit - round_counter;
+    let s = "Round Timer";
 
-    textSize(32);
-    text(output, 20,300);
+    let t = convert_time(round_timer_limit - round_counter);
+
+    textSize(72);
+    text(s, 20, 60);
+
+    //actual timer
+    textSize(128);
+    text(t, 150,175);
   }
 
+  //draw match timer?
+  //might not even be needed
+  //can just be stored and displayed in a stats screen at the end
 
+  let s = "Total Timer";
+  let t = convert_time(overall_timer);
+
+  textSize(72);
+  text(s, 20, 385);
+
+  //actual timer
+  textSize(128);
+  text(t, 150,500);
+
+}
+
+function convert_time(input_seconds)
+{
+  //.toString()
+  //MM:SS
+  let min = Math.floor(input_seconds / 60); //divide to get mins, but ROUND DOWN without decimals
+  let sec = input_seconds % 60;
+
+  if (sec.toString().length == 1) //if only 1 char long, need to buffer with 0    1 = 01   2 = 02 etc
+    {sec = "0" + sec;}
+
+  let output = (min.toString()) + ":" + (sec.toString());
+
+  return output;
 }
 
 function resetTimers()
