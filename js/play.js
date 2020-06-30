@@ -25,8 +25,10 @@ let playerList = [];
 let turnCount = 0;
 let grid = null;
 
+let gs = null;
 
 function setup(i_GameSetupPackage) {
+
 
 //use system library to get user's window dimensions.
 canvasWidth = windowWidth;
@@ -59,9 +61,11 @@ else //default, mainly for testing
 
   //Create the players with their colours and chosen tiles
   //will be passed in from previous page, but for now will be hardcoded
-  playerList.push(new Player(Tile_States.NAUGHT, color(0,0,255)));
-  playerList.push(new Player(Tile_States.CROSS, color(255,0,0)));
+  playerList.push(new Player(document.getElementById("P1Name").innerHTML = localStorage.getItem("player1Name"),document.getElementById("S1Name").innerHTML = localStorage.getItem("symbol1"), color(0,0,255)));
+  playerList.push(new Player(document.getElementById("P2Name").innerHTML = localStorage.getItem("player2Name"),document.getElementById("S2Name").innerHTML = localStorage.getItem("symbol2"), color(255,0,0)));
 
+  console.log(playerList[0].getName());
+  console.log(playerList[1].getName());
 }
 
 //check which algorithm to use

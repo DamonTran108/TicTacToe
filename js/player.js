@@ -1,8 +1,8 @@
 class Player{
-  constructor(symbol, color){
+  constructor(name, symbol, color){
     this.symbol = symbol;
     this.color = color;
-    this.name = null;
+    this.name = name;
   }
 
   getSymbol(){
@@ -12,5 +12,10 @@ class Player{
   getColor()
   {
     return this.color;
+  }
+
+  getName()
+  {
+    return this.name;
   }
 }
