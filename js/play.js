@@ -187,16 +187,7 @@ function createAssets(i_GameSetupPackage)
   }
 
   //check which algorithm to use
-  if (grid.getRowLength() == grid.getColLength())
-  {
-    isSimple = true;
-  }
-  else
-  {
-    isSimple = false;
-  }
-  console.log(grid.getRowLength());
-}
+
 
 function addPlayers()
 {
@@ -210,6 +201,16 @@ function createGrid()
 {
   let dynamic_size = (max_g_length / 5);
   grid = new Grid(grid_pos_x,grid_pos_y,dynamic_size, document.getElementById("row").innerHTML = localStorage.getItem("rowL"),document.getElementById("col").innerHTML = localStorage.getItem("colL"));
+  if (grid.getRowLength() == grid.getColLength())
+  {
+    isSimple = true;
+  }
+  else
+  {
+    isSimple = false;
+  }
+  console.log(grid.getRowLength());
+  }
   console.log(grid.getRowLength())
   console.log(grid.getColLength())
 }
