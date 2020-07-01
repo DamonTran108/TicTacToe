@@ -111,7 +111,8 @@ function resetTimers()
   round_counter = 0;
 }
 
-function setup(i_GameSetupPackage) {
+
+function setup() {
 
 
 //use system library to get user's window dimensions.
@@ -126,42 +127,7 @@ grid_pos_y = canvasHeight/2 - max_g_length/2;
 
 background(255,0,0);
 
-if (i_GameSetupPackage != null) // has passed in a data package, custom input
-{
-
-  let dynamic_size = max_g_length / (Math.max(i_GameSetupPackage.rowLength, i_GameSetupPackage.colLength));
-
-  //constructor(xCord,yCord,i_t_length, rowLength, colLength)
-  grid = new Grid(grid_pos_x,grid_pos_y, dynamic_size , i_GameSetupPackage.rowLength ,i_GameSetupPackage.colLength);
-  playerList.push(i_GameSetupPackage.player1);
-  playerList.push(i_GameSetupPackage.player2);
-
-  tilesToWin = i_GameSetupPackage.tilesToWin;
-}
-else //default, mainly for testing
-{
-  let dynamic_size = (max_g_length / 5);
-  grid = new Grid(grid_pos_x,grid_pos_y,dynamic_size, document.getElementById("row").innerHTML = localStorage.getItem("rowL"),document.getElementById("col").innerHTML = localStorage.getItem("colL"));
-
-  //Create the players with their colours and chosen tiles
-  //will be passed in from previous page, but for now will be hardcoded
-  playerList.push(new Player(document.getElementById("P1Name").innerHTML = localStorage.getItem("player1Name"),document.getElementById("S1Name").innerHTML = localStorage.getItem("symbol1"), localStorage.getItem("color1")));
-  playerList.push(new Player(document.getElementById("P2Name").innerHTML = localStorage.getItem("player2Name"),document.getElementById("S2Name").innerHTML = localStorage.getItem("symbol2"),  localStorage.getItem("color2")));
-
-  console.log(playerList[0].getName());
-  console.log(playerList[1].getName());
-}
-
-//check which algorithm to use
-if (grid.rowLength == grid.colLength)
-{
-  isSimple = true;
-}
-else
-{
-  isSimple = false;
-}
-
+createAssets();
 
 
 /////TIMER stuff
@@ -194,6 +160,59 @@ update_game();
   this.draw_timers();
 }
 
+function createAssets(i_GameSetupPackage)
+{
+  if (i_GameSetupPackage != null) // has passed in a data package, custom input
+  {
+
+    let dynamic_size = max_g_length / (Math.max(i_GameSetupPackage.rowLength, i_GameSetupPackage.colLength));
+
+    //constructor(xCord,yCord,i_t_length, rowLength, colLength)
+    grid = new Grid(grid_pos_x,grid_pos_y, dynamic_size , i_GameSetupPackage.rowLength ,i_GameSetupPackage.colLength);
+    playerList.push(i_GameSetupPackage.player1);
+    playerList.push(i_GameSetupPackage.player2);
+
+    tilesToWin = i_GameSetupPackage.tilesToWin;
+  }
+  else //default, mainly for testing
+  {
+    createGrid();
+
+    //Create the players with their colours and chosen tiles
+    addPlayers();
+    //will be passed in from previous page, but for now will be hardcoded
+
+    console.log(playerList[0].getName());
+    console.log(playerList[1].getName());
+  }
+
+  //check which algorithm to use
+  if (grid.getRowLength() == grid.getColLength())
+  {
+    isSimple = true;
+  }
+  else
+  {
+    isSimple = false;
+  }
+  console.log(grid.getRowLength());
+}
+
+function addPlayers()
+{
+  console.log("adding players..")
+  playerList.push(new Player(document.getElementById("P1Name").innerHTML = localStorage.getItem("player1Name"),document.getElementById("S1Name").innerHTML = localStorage.getItem("symbol1"), localStorage.getItem("color1")));
+  playerList.push(new Player(document.getElementById("P2Name").innerHTML = localStorage.getItem("player2Name"),document.getElementById("S2Name").innerHTML = localStorage.getItem("symbol2"),  localStorage.getItem("color2")));
+
+}
+
+function createGrid()
+{
+  let dynamic_size = (max_g_length / 5);
+  grid = new Grid(grid_pos_x,grid_pos_y,dynamic_size, document.getElementById("row").innerHTML = localStorage.getItem("rowL"),document.getElementById("col").innerHTML = localStorage.getItem("colL"));
+  console.log(grid.getRowLength())
+  console.log(grid.getColLength())
+}
 
 function update_game()
 {

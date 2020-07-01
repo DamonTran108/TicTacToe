@@ -20,10 +20,6 @@ class GameSetupPackage
 
   }
 
-  getPlayer1()
-  {
-  return this.player1;
-  }
 
 
 }
@@ -39,9 +35,10 @@ function executes()
   var col1 = document.getElementById('ColorPicker1').value;
   var col2 = document.getElementById('ColorPicker2').value;
   // If they have the same symbol selected then dont do the rest... Else...
-  if(player1Symbol == player2Symbol)
+  //Validation checks
+  if(player1Symbol == player2Symbol || row == "" || col == "")
   {
-    console.log("they're the same!");
+    alert("Please check you have different symbols for players OR given a row/column length");
   }else{
  localStorage.setItem("colL", row);
  localStorage.setItem("rowL", col);
