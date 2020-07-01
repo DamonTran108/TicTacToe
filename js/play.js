@@ -521,6 +521,9 @@ function checkDiagAlt()
   let effColLength = grid.getColLength() - 1; //offset for arrays beginning at 0
   let effRowLength = grid.getRowLength() - 1;
 
+  //console.log("effCOlLength:" + effColLength);
+  //console.log("effRowLength:" + effRowLength);
+
   //recently input tile data
   let rowIndex = grid.getIndexH();
   let colIndex = grid.getIndexV();
@@ -544,7 +547,7 @@ function checkDiagAlt()
 
     for (let x = 0; i >= 0 && j >=0; i--, j-- )
     {
-      if(grid.getGrid()[i][j].getState() == sought_state)
+      if((grid.getGrid()[i][j].getState() == sought_state) && ((i < effRowLength) && (j < effColLength)))
       {
         //console.log("Tile Found")
         t_counter++;
@@ -562,6 +565,9 @@ function checkDiagAlt()
     //need to offset initial i so it starts left of the center
     let i = rowIndex + 1;
     let j = colIndex + 1;
+
+    console.log("i:" + i);
+    console.log("j:" + j);
 
     for (let x = 0; i <= effRowLength && j <= effColLength; i++, j++ )
     {
