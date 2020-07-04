@@ -158,19 +158,19 @@ function update_game()
 
 // When the user clicks the mouse
 function mousePressed() {
-//remove tile length and put into grid as they'll all be the same
+  //remove tile length and put into grid as they'll all be the same
 
-// Pass in mouse data to check if a tile is clicked
-//Pass in currentPlayer so it can simply update the tile as soon as it finds interval
-//Would use pointers but javascript
-if (grid.checkGridBounds(mouseX,mouseY,currentPlayer))
-{
-  turnCount++;
-  this.checkTilesForWinCon();
-}
+  // Pass in mouse data to check if a tile is clicked
+  //Pass in currentPlayer so it can simply update the tile as soon as it finds interval
+  //Would use pointers but javascript
+  if (grid.checkGridBounds(mouseX,mouseY,currentPlayer))
+  {
+    turnCount++;
+    this.checkTilesForWinCon();
+  }
 
-//next player
-currentPlayer = playerList[(turnCount % 2)];
+  //next player
+  currentPlayer = playerList[(turnCount % 2)];
 
 }
 
@@ -704,12 +704,36 @@ function drawHUD()
 {
   //Maybe get some text wrap
 
-  //Current player turn
-  let s = (currentPlayer.getName() + " : " + currentPlayer.getSymbol());
+  //text border stuff
+  stroke(255);//color
+  strokeWeight(5);
 
-  //console.log(currentPlayer);
+
+  //text presets
+  fill(currentPlayer.getColor());
   textSize(72);
-  text(s, 400, 150);
+
+  let s = (currentPlayer.getName() + "  turn");
+  let player_text_x = 700; //used to 'stick' the symbol to the front of text
+  let player_text_y = 150;
+
+  text(s, player_text_x, player_text_y); //DRAW
+
+
+  //Presets
+  fill(currentPlayer.getColor());
+  textSize(128);
+
+  let symbol_s = currentPlayer.getSymbol(); //new string to to keep everything seperate
+  let player_text_width = textWidth(s)/2;
+  //let player_text_height = textAscent(s);
+  let symbol_text_off = textWidth(symbol_s);
+
+  //draw symbols either side
+  text(symbol_s,player_text_x - symbol_text_off,player_text_y);
+  text(symbol_s,player_text_x + symbol_text_off + player_text_width,player_text_y);
+  //text(symbol_s,(player_text_x + player_text_width + symbol_text_off),player_text_y);
+
 
 
 
