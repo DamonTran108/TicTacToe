@@ -242,6 +242,30 @@ function checkTilesForWinCon()
 {
 
 
+  //DIFFERENCE BETWEEN THE CHECKS
+  // Simple: Row and column count are the same, so it is a square instead of an iregular rectangle
+  //These functions rely on the board being regular and and tiles required the length of the board
+
+  //This results in a much lower number of win conditions as a line needs to go from one side of the board to the other.
+
+  // e.g Only 2 possible diagonal wins, as there is not enough room unless they go through the center.
+  // The require tiles to win are different to the size of the board.
+  // Simple games Examples
+  //    3x3 board with 3 tiles to win
+  //    5x5 board with 5 tiles to win.
+  //    100x100 board with 100 tiles to win
+
+
+  // Complex
+  // The row and column counts are not the same, AND/OR the number of tiles to win is less than the board length
+  // These alt functions explore from the last input tile
+  // To fufill the win con the entire line does not need to be a certain symbol, but have enough adjacent tiles
+  // Complex game Examples
+  //    3x3 board with 2 tiles to win
+  //    4x5 board with 4 tiles to win
+  //    100x100 board with 99 tiles to win
+
+
   if (isSimple)
   {
     this.checkRow();
