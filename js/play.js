@@ -19,6 +19,7 @@ let isSimple = true;
 let tilesToWin = 3; //how many tiles in a row that are needed for win condition
 //player functionality
 let playerList = [];
+let currentPlayer = null;
 
 //need to add 1 on the turns for the display
 //starts from 0 so it works with the array
@@ -52,7 +53,7 @@ grid_pos_y = canvasHeight/2 - max_g_length/2;
 
 background(255,0,0);
 
-createAssets();
+createAssets(); //get stuff from html
 
 
 /////TIMER stuff
@@ -63,7 +64,9 @@ setInterval(increment_timers ,1000) //process the function every second
 
 
 
-
+currentPlayer = playerList[0]; //INITIAL
+currentPlayer = playerList[(turnCount % 2)];
+console.log(playerList);
 console.log(grid);
 }
 
@@ -156,7 +159,6 @@ function update_game()
 // When the user clicks the mouse
 function mousePressed() {
 //remove tile length and put into grid as they'll all be the same
-let currentPlayer = playerList[(turnCount % 2)];
 
 // Pass in mouse data to check if a tile is clicked
 //Pass in currentPlayer so it can simply update the tile as soon as it finds interval
@@ -166,6 +168,9 @@ if (grid.checkGridBounds(mouseX,mouseY,currentPlayer))
   turnCount++;
   this.checkTilesForWinCon();
 }
+
+//next player
+currentPlayer = playerList[(turnCount % 2)];
 
 }
 
@@ -697,5 +702,15 @@ function resetTimers()
 
 function drawHUD()
 {
-  
+  //Maybe get some text wrap
+
+  //Current player turn
+  let s = (currentPlayer.getName() + " : " + currentPlayer.getSymbol());
+
+  //console.log(currentPlayer);
+  textSize(72);
+  text(s, 400, 150);
+
+
+
 }
