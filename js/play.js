@@ -34,82 +34,7 @@ let round_counter = 0;
 let overall_timer = 0;
 
 
-function increment_timers()
-{
-  round_counter++;
-  overall_timer++;
 
-}
-
-function check_round_timer() //simply checks if the round timer has gone to 0 or not
-{
-  if (round_timer_limit <= round_counter)
-    {return true;}
-  else
-    {return false;}
-}
-
-function draw_timers()
-{
-  //check if there's even a round timer before starting to draw it
-  //Looks like text draws from the bottom right corner? jesus
-
-  //// TODO:
-  //Center the timer text
-  //better strings for each timer
-  //Find a good place for the timer
-  //Maybe add red warning colour as it gets the that last few seconds
-
-  //draw round timer
-  if (round_timer_limit > 0)
-  {
-    let s = "Round Timer";
-
-    let t = convert_time(round_timer_limit - round_counter);
-
-    textSize(72);
-    text(s, 20, 60);
-
-    //actual timer
-    textSize(128);
-    text(t, 150,175);
-  }
-
-  //draw match timer?
-  //might not even be needed
-  //can just be stored and displayed in a stats screen at the end
-
-  let s = "Total Timer";
-  let t = convert_time(overall_timer);
-
-  textSize(72);
-  text(s, 20, 385);
-
-  //actual timer
-  textSize(128);
-  text(t, 150,500);
-
-}
-
-function convert_time(input_seconds)
-{
-  //.toString()
-  //MM:SS
-  let min = Math.floor(input_seconds / 60); //divide to get mins, but ROUND DOWN without decimals
-  let sec = input_seconds % 60;
-
-  if (sec.toString().length == 1) //if only 1 char long, need to buffer with 0    1 = 01   2 = 02 etc
-    {sec = "0" + sec;}
-
-  let output = (min.toString()) + ":" + (sec.toString());
-
-  return output;
-}
-
-function resetTimers()
-{
-  round_counter = 0;
-}
 
 
 function setup() {
@@ -145,7 +70,6 @@ console.log(grid);
 
 function draw() {
 
-//update all relevent ingame logic that is based on time
 //called "update_game" so the naming does not clash with existing update functions
 update_game();
 
@@ -157,7 +81,8 @@ update_game();
 
   grid.drawGrid();
 
-  this.draw_timers();
+  this.drawTimers();
+  this.drawHUD();
 }
 
 function createAssets(i_GameSetupPackage)
@@ -201,29 +126,35 @@ function createGrid()
 {
   let dynamic_size = (max_g_length / 5);
   grid = new Grid(grid_pos_x,grid_pos_y,dynamic_size, document.getElementById("row").innerHTML = localStorage.getItem("rowL"),document.getElementById("col").innerHTML = localStorage.getItem("colL"));
+
+  //Sets what win con algorithms to use
   if (grid.getRowLength() == grid.getColLength())
-  {
-    isSimple = true;
-  }
+  {isSimple = true;}
   else
-  {
-    isSimple = false;
+  {isSimple = false;}
   }
   console.log(grid.getRowLength());
-  }
-  console.log(grid.getRowLength())
-  console.log(grid.getColLength())
+  console.log(grid.getColLength());
+  console.log(isSimple);
 }
 
 function update_game()
 {
-  if (check_round_timer())
-    {resetTimers();}
+  //Updates the realtime game logic
+  //Tictactoe is technically a Turn Based Strategy game which relies on user input to update game logic
+  //Due to this a large portion of the updates happen in mouse click
+
+  //However for real time based logic such as timers and animation ticking, this function will be used
+  //It is placed at the beginning of the draw function for now unless a more streamlined, already integrated method is found
+  //
+
+  //Check round timer
+  //if (check_round_timer())
+    //{resetTimers();}
 }
 
 // When the user clicks the mouse
 function mousePressed() {
-
 //remove tile length and put into grid as they'll all be the same
 let currentPlayer = playerList[(turnCount % 2)];
 
@@ -662,4 +593,109 @@ function checkDiagAlt()
   console.log("Coord (" + rowIndex + "," + colIndex + ")" + "\n" +"TileCount in diag: (" + t_counter + ")");
 
 
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// TIMER STUFF //////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function increment_timers()
+{
+  round_counter++;
+  overall_timer++;
+
+
+  if (check_round_timer())
+    {resetTimers();}
+
+}
+
+function check_round_timer() //simply checks if the round timer has gone to 0 or not
+{
+  if (round_timer_limit <= round_counter)
+    {return true;}
+  else
+    {return false;}
+}
+
+function drawTimers()
+{
+  //check if there's even a round timer before starting to draw it
+  //Looks like text draws from the bottom right corner? jesus
+
+  //// TODO:
+  //Center the timer text
+  //better strings for each timer
+  //Find a good place for the timer
+  //Maybe add red warning colour as it gets the that last few seconds
+
+  //draw round timer
+  if (round_timer_limit > 0)
+  {
+    let s = "Round Timer";
+
+    let t = convert_time(round_timer_limit - round_counter);
+
+    textSize(72);
+    text(s, 20, 60);
+
+    //actual timer
+    textSize(128);
+    text(t, 150,175);
+  }
+
+  //draw match timer?
+  //might not even be needed
+  //can just be stored and displayed in a stats screen at the end
+
+  let s = "Total Timer";
+  let t = convert_time(overall_timer);
+
+  textSize(72);
+  text(s, 20, 385);
+
+  //actual timer
+  textSize(128);
+  text(t, 150,500);
+
+}
+
+function convert_time(input_seconds)
+{
+  //Turns seconds to minutes and seconds
+  //S -> M:S
+
+  //Done using math
+
+  let min = Math.floor(input_seconds / 60); //divide to get mins, but ROUND DOWN to remove decimals
+  let sec = input_seconds % 60; //Gets the remainder
+
+  //Example
+  //If 80 is put into it then   min = 1 and sec = 20
+  // They then get squashed together into 1:20
+
+
+  if (sec.toString().length == 1) //if only 1 char long, need to buffer withan extra 0    1 = 01   2 = 02 etc
+    {sec = "0" + sec;}
+
+  let output = (min.toString()) + ":" + (sec.toString());
+
+  return output;
+}
+
+function resetTimers()
+{
+  round_counter = 0;
+}
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// HUD Stuff ////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function drawHUD()
+{
+  
 }
