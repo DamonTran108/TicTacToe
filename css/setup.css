@@ -2,7 +2,7 @@ label {
     width:180px;
     clear:left;
     text-align:right;
-    padding-right:100px;
+    padding-right:80px;
     padding-left: 20px;
 }
 
@@ -26,6 +26,7 @@ label {
 }
 
 #ColorPicker1{
+
  width:150px;
  height:18.5px;
 }
@@ -34,4 +35,13 @@ label {
  width:150px;
  height:18.5px;
 
+}
+
+select, option {
+    width: 100px;
+}
+
+
+.testBtn{
+  position:absolute;
 }

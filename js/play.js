@@ -27,16 +27,15 @@ let turnCount = 0;
 let grid = null;
 
 let gs = null;
-
+let winner  = null;
 //Timer stuff
 //for now timers are in seconds, may add milliseconds
 let round_timer_limit = 10; //-1 is exit value
 let round_counter = 0;
 let overall_timer = 0;
 
-
-
-
+resetBtn = null;
+surrBtn = null;
 
 function setup() {
 
@@ -46,7 +45,11 @@ canvasWidth = windowWidth;
 canvasHeight = windowHeight;
 
 //Create canvas based on size. Only a portion will hold the important info
+
 createCanvas(canvasWidth, canvasHeight);
+createBtns();
+
+
 
 grid_pos_x = canvasWidth/2 - max_g_length/2;
 grid_pos_y = canvasHeight/2 - max_g_length/2;
@@ -70,6 +73,64 @@ console.log(playerList);
 console.log(grid);
 }
 
+function change_background() {
+
+    // Pick a random number for r value
+    r = random(255);
+
+    // Pick a random number for g value
+    g = random(255);
+
+    // Pick a random number for b value
+    b = random(255);
+
+    // Set a random background-color
+    background(r, g, b);
+}
+
+function reset()
+{
+  window.alert("resetting match...");
+  grid.clearGridStates();
+  winner = null;
+
+}
+
+function surrender()
+{
+  let surrenderer = currentPlayer.getSymbol();
+  let Pname =  currentPlayer.getName();
+  let Pname2 =  playerList[1].getName();
+  let winningState = null;
+
+for(let i = 0; i < playerList.length; i++)
+{
+  if(Pname != playerList[i].getName())
+  {
+    winner = playerList[i].getName();
+    winningState = playerList[i].getSymbol();
+
+  }
+}
+  console.log(Pname + " - " + " Symbol: " + surrenderer + " forfeited the game!");
+  console.log(winner + " - " +" Symbol: " + winningState +  " WINS");
+}
+
+function createBtns()
+{
+  resetBtn = createButton("Reset");
+  resetBtn.mouseClicked(reset);
+  resetBtn.position(100,700);
+  resetBtn.size(100,100);
+
+  resetBtn = createButton("Surrender");
+  resetBtn.mouseClicked(surrender);
+  resetBtn.position(100,800);
+  resetBtn.size(100,100);
+
+}
+
+
 
 function draw() {
 
@@ -86,6 +147,8 @@ update_game();
 
   this.drawTimers();
   this.drawHUD();
+
+
 }
 
 function createAssets(i_GameSetupPackage)
@@ -173,6 +236,8 @@ function mousePressed() {
   currentPlayer = playerList[(turnCount % 2)];
 
 }
+
+
 
 function checkTilesForWinCon()
 {
