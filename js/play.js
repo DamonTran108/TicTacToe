@@ -93,6 +93,7 @@ function reset()
   window.alert("resetting match...");
   grid.clearGridStates();
   winner = null;
+  currentPlayer = playerList[0];
 
 }
 
@@ -221,6 +222,11 @@ function update_game()
 
 // When the user clicks the mouse
 function mousePressed() {
+  if(winner == null)
+  {
+
+
+
   //remove tile length and put into grid as they'll all be the same
 
   // Pass in mouse data to check if a tile is clicked
@@ -234,7 +240,7 @@ function mousePressed() {
 
   //next player
   currentPlayer = playerList[(turnCount % 2)];
-
+  }
 }
 
 
@@ -269,6 +275,11 @@ function checkTilesForWinCon()
 
   if (isSimple)
   {
+    if(this.checkRow() || this.checkCol()|| this.checkDiagRight()|| this.checkDiagLeft())
+    {
+      winner = currentPlayer;
+      console.log(winner.getName() + "  wins");
+    }
     this.checkRow();
     this.checkCol();
     this.checkDiagRight();
@@ -285,6 +296,7 @@ function checkTilesForWinCon()
   if(turnCount == grid.getGrid().length * grid.getGrid().length && win==false){
     console.log("DRAW!");
   }
+
 
 }
 
@@ -310,6 +322,7 @@ function checkRow()
       {
         console.log("A WINCON IS FOUND BY ROW");
         win = true;
+
         return true;
 
       }
@@ -409,6 +422,7 @@ function checkCol()
       {
         console.log("A WINCON IS FOUND BY Col");
         win = true;
+
         return true;
 
       }
@@ -499,6 +513,7 @@ function checkDiagRight()
       {
         console.log("A WINCON IS FOUND BY DIAG");
         win = true;
+
         return true;
 
       }
@@ -527,6 +542,7 @@ function checkDiagLeft()
       {
         console.log("A WINCON IS FOUND BY DIAG");
         win = true;
+
         return true;
 
       }
@@ -691,6 +707,8 @@ function check_round_timer() //simply checks if the round timer has gone to 0 or
 
 function drawTimers()
 {
+
+
   //check if there's even a round timer before starting to draw it
   //Looks like text draws from the bottom right corner? jesus
 
