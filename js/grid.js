@@ -162,4 +162,14 @@ class Grid{
   {
     return indexV;
   }
+
+  getXpos()
+  {
+  return this.x;
+  }
+
+  getYpos()
+  {
+  return this.y;
+  }
 }

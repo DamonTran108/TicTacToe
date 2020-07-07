@@ -36,6 +36,7 @@ let overall_timer = 0;
 
 resetBtn = null;
 surrBtn = null;
+rematchBtn = null;
 
 function setup() {
 
@@ -93,6 +94,7 @@ function reset()
   window.alert("resetting match...");
   grid.clearGridStates();
   winner = null;
+  turnCount = 0;
   currentPlayer = playerList[0];
 
 }
@@ -108,7 +110,7 @@ for(let i = 0; i < playerList.length; i++)
 {
   if(Pname != playerList[i].getName())
   {
-    winner = playerList[i].getName();
+    winner = playerList[i];
     winningState = playerList[i].getSymbol();
 
   }
@@ -148,6 +150,19 @@ update_game();
 
   this.drawTimers();
   this.drawHUD();
+
+  if(winner !=null)
+  {
+
+    text(winner.getName() + " WINS!", grid.getXpos()+300, grid.getYpos()); //DRAW
+
+
+    //Presets
+    fill(currentPlayer.getColor());
+    textSize(128);
+    
+  }
+
 
 
 }
@@ -218,6 +233,7 @@ function update_game()
   //Check round timer
   //if (check_round_timer())
     //{resetTimers();}
+
 }
 
 // When the user clicks the mouse
@@ -241,6 +257,7 @@ function mousePressed() {
   //next player
   currentPlayer = playerList[(turnCount % 2)];
   }
+
 }
 
 
