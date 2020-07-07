@@ -48,7 +48,7 @@ canvasHeight = windowHeight;
 //Create canvas based on size. Only a portion will hold the important info
 
 createCanvas(canvasWidth, canvasHeight);
-createBtns();
+
 
 
 
@@ -58,7 +58,7 @@ grid_pos_y = canvasHeight/2 - max_g_length/2;
 background(255,0,0);
 
 createAssets(); //get stuff from html
-
+createBtns();
 
 /////TIMER stuff
 //setTimeout(function, milliseconds)
@@ -131,6 +131,13 @@ function createBtns()
   resetBtn.position(100,800);
   resetBtn.size(100,100);
 
+  rematchBtn = createButton("Rematch?");
+  rematchBtn.mouseClicked(reset);
+  rematchBtn.position(grid.getXpos()+700,grid.getYpos()+100);
+  rematchBtn.size(100,100);
+  rematchBtn.hide();
+
+
 }
 
 
@@ -160,7 +167,9 @@ update_game();
     //Presets
     fill(currentPlayer.getColor());
     textSize(128);
-    
+    rematchBtn.show();
+  }else{
+    rematchBtn.hide();
   }
 
 
