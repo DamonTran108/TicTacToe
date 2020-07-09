@@ -175,6 +175,14 @@ update_game();
   }else{
     rematchBtn.hide();
     surrBtn.show();
+
+    if(turnCount == grid.getRowLength() * grid.getColLength() && winner==null){
+      console.log("DRAW!");
+      text("Draw", grid.getXpos()+300, grid.getYpos());
+      fill(currentPlayer.getColor());
+      textSize(128);
+    }
+
   }
 
 
@@ -266,6 +274,7 @@ function mousePressed() {
   {
     turnCount++;
     this.checkTilesForWinCon();
+    console.log("Turn Count : " + turnCount)
   }
 
   //next player
@@ -324,9 +333,6 @@ function checkTilesForWinCon()
   }
 
 
-  if(turnCount == grid.getGrid().length * grid.getGrid().length && win==false){
-    console.log("DRAW!");
-  }
 
 
 }
