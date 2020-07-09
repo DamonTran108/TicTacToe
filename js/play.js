@@ -181,6 +181,8 @@ update_game();
       text("Draw", grid.getXpos()+300, grid.getYpos());
       fill(currentPlayer.getColor());
       textSize(128);
+      surrBtn.hide();
+      rematchBtn.show();
     }
 
   }
