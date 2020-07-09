@@ -129,10 +129,10 @@ function createBtns()
   resetBtn.position(100,700);
   resetBtn.size(100,100);
 
-  resetBtn = createButton("Surrender");
-  resetBtn.mouseClicked(surrender);
-  resetBtn.position(100,800);
-  resetBtn.size(100,100);
+  surrBtn = createButton("Surrender");
+  surrBtn.mouseClicked(surrender);
+  surrBtn.position(100,800);
+  surrBtn.size(100,100);
 
   rematchBtn = createButton("Rematch?");
   rematchBtn.mouseClicked(reset);
@@ -171,8 +171,10 @@ update_game();
     fill(currentPlayer.getColor());
     textSize(128);
     rematchBtn.show();
+    surrBtn.hide();
   }else{
     rematchBtn.hide();
+    surrBtn.show();
   }
 
 
