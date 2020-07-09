@@ -117,6 +117,11 @@ class Tile{
       this.Tile_color = input_color;
   }
 
+  updateSymbolColor(symbol_color)
+  {
+      this.Symbol_color = symbol_color;
+  }
+
 
 getXpos(){
   return this.x;

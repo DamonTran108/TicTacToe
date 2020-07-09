@@ -33,14 +33,14 @@ let winner  = null;
 let round_timer_limit = 10; //-1 is exit value
 let round_counter = 0;
 let overall_timer = 0;
-
+let winConArr =null;
 resetBtn = null;
 surrBtn = null;
 rematchBtn = null;
 
 function setup() {
 
-
+winConArr = [];
 //use system library to get user's window dimensions.
 canvasWidth = windowWidth;
 canvasHeight = windowHeight;
@@ -92,10 +92,13 @@ function change_background() {
 function reset()
 {
   window.alert("resetting match...");
-  grid.clearGridStates();
+  playerList = [];
+  createAssets();
   winner = null;
   turnCount = 0;
   currentPlayer = playerList[0];
+  winConArr = [];
+  console.log(winConArr)
 
 }
 
@@ -342,13 +345,14 @@ function checkRow()
       console.log("Row matches");
       counter++; //Counter variable to count how many states are the same
 
-
+      winConArr[i] =  grid.getGrid()[rowIndex][i];
       //If statement to check when all the tiles are the same state then print...
       if(counter == grid.getRowLength())
       {
         console.log("A WINCON IS FOUND BY ROW");
         win = true;
 
+        highlightWin();
         return true;
 
       }
@@ -356,7 +360,10 @@ function checkRow()
     }
 
   }
+  console.log(winConArr);
 }
+
+
 
 function checkRowAlt(i_sought_state) //alternatitve way to check row win, uses last tile as a pivot andcan be used for bigger grids
 {
@@ -441,14 +448,14 @@ function checkCol()
     {
 
       counter++; //Counter variable to count how many states are the same
-
+      winConArr[i] =  grid.getGrid()[i][colIndex];
 
       //If statement to check when all the tiles are the same state then print...
       if(counter == grid.getColLength())
       {
         console.log("A WINCON IS FOUND BY Col");
         win = true;
-
+        highlightWin();
         return true;
 
       }
@@ -533,13 +540,13 @@ function checkDiagRight()
     if(grid.getGrid()[i][i].getState() == grid.getTileChosen().getState())
     {
       counter++
-
+      winConArr[i] =  grid.getGrid()[i][i];
       //increment counter and if the counter hits the same size as the length of the grid then they win
       if(counter == grid.getColLength())
       {
         console.log("A WINCON IS FOUND BY DIAG");
         win = true;
-
+        highlightWin();
         return true;
 
       }
@@ -562,13 +569,13 @@ function checkDiagLeft()
     if(grid.getGrid()[i][j].getState() == grid.getTileChosen().getState())
     {
       counter++
-
+      winConArr[i] =  grid.getGrid()[i][j];
       //Check if counter hits size of grid... If so they win.
       if(counter == grid.getColLength())
       {
         console.log("A WINCON IS FOUND BY DIAG");
         win = true;
-
+        highlightWin();
         return true;
 
       }
@@ -576,10 +583,17 @@ function checkDiagLeft()
     }
     i++;
     j--;
-  }
 
+  }
 }
 
+function highlightWin()
+{
+  for(let i = 0 ; i < grid.getRowLength(); i++)
+  {
+    winConArr[i].updateSymbolColor(color(0,255,0));
+  }
+}
 
 function checkDiagAlt()
 {
