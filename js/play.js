@@ -91,6 +91,7 @@ function change_background() {
 
 function reset()
 {
+  turnCount = 0;
   window.alert("resetting match...");
   playerList = [];
   createAssets();
@@ -177,7 +178,7 @@ update_game();
     surrBtn.show();
 
     if(turnCount == grid.getRowLength() * grid.getColLength() && winner==null){
-      console.log("DRAW!");
+
       text("Draw", grid.getXpos()+300, grid.getYpos());
       fill(currentPlayer.getColor());
       textSize(128);
