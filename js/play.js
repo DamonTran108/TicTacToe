@@ -775,7 +775,8 @@ function drawTimers()
   {
     let warningColor = color(240,0,0); //So it's easy to change whenver
 
-    //stroke(warningColor - color(50,0,0));//color
+    //stroke(warningColor);//color
+    noStroke();
     fill(warningColor);
     textSize(72);
   }
