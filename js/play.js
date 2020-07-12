@@ -34,9 +34,12 @@ let round_timer_limit = 10; //-1 is exit value
 let round_counter = 0;
 let overall_timer = 0;
 let winConArr =null;
+let timerRefreshID = null;
 resetBtn = null;
 surrBtn = null;
 rematchBtn = null;
+
+
 
 function setup() {
 
@@ -64,7 +67,7 @@ createBtns();
 //setTimeout(function, milliseconds)
 //setInterval(function, milliseconds)
 
-var timerRefreshID = setInterval(increment_timers ,1000) //process the function every second
+timerRefreshID = setInterval(increment_timers ,1000) //process the function every second
 
 
 
@@ -244,23 +247,16 @@ function mousePressed() {
   if(winner == null)
   {
 
-
-
-  //remove tile length and put into grid as they'll all be the same
-
-  // Pass in mouse data to check if a tile is clicked
-  //Pass in currentPlayer so it can simply update the tile as soon as it finds interval
-  //Would use pointers but javascript
-  if (grid.checkGridBounds(mouseX,mouseY,currentPlayer))
-  {
-    turnCount++;
-    this.checkTilesForWinCon();
-    console.log("Turn Count : " + turnCount)
-  }
-
-  //next player
-  currentPlayer = playerList[(turnCount % 2)];
-  }
+    if (grid.checkGridBounds(mouseX,mouseY,currentPlayer))
+    {
+      turnCount++;
+      roundTimerReset();
+      this.checkTilesForWinCon();
+      console.log("Turn Count : " + turnCount)
+    }
+    //next player
+      currentPlayer = playerList[(turnCount % 2)];
+    }
 
 }
 
@@ -743,36 +739,23 @@ function drawTimers()
 {
 
 
-  //check if there's even a round timer before starting to draw it
-  //Looks like text draws from the bottom right corner? jesus
-
   //// TODO:
   //Center the timer text
   //better strings for each timer
   //Find a good place for the timer
   //Maybe add red warning colour as it gets the that last few seconds
 
-  //draw round timer
-  if (round_timer_limit > 0)
-  {
-    let s = "Round Timer";
+  //drawing data
+  stroke(255);//color
+  strokeWeight(5);
+  fill(0);
+  textSize(72);
 
-    let t = convert_time(round_timer_limit - round_counter);
 
-    textSize(72);
-    text(s, 20, 60);
-
-    //actual timer
-    textSize(128);
-    text(t, 150,175);
-  }
-
-  //draw match timer?
-  //might not even be needed
-  //can just be stored and displayed in a stats screen at the end
 
   let s = "Total Timer";
-  let t = convert_time(overall_timer);
+  let rawt = overall_timer; //before conversion
+  let t = convert_time(rawt);
 
   textSize(72);
   text(s, 20, 385);
@@ -780,6 +763,30 @@ function drawTimers()
   //actual timer
   textSize(128);
   text(t, 150,500);
+
+
+
+  s = "Round Timer";
+  rawt = round_timer_limit - round_counter;
+  t = convert_time(rawt);
+
+  //warning colours, can be remove if doesn't mesh with the background
+  if (rawt < 6)
+  {
+    let warningColor = color(240,0,0); //So it's easy to change whenver
+
+    //stroke(warningColor - color(50,0,0));//color
+    fill(warningColor);
+    textSize(72);
+  }
+
+  //timer text
+  textSize(72);
+  text(s, 20, 60);
+
+  //actual timer
+  textSize(128);
+  text(t, 150,175);
 
 }
 
@@ -808,18 +815,23 @@ function convert_time(input_seconds)
 
 function roundTimerReset()
 {
-  round_counter = -1;
+  round_counter = 0;
+
+  //refresh the interval stuff
+  //get the full seconds
+  clearInterval(timerRefreshID);
+  timerRefreshID = setInterval(increment_timers ,1000);
 }
 
 function hardTimerReset()
 {
   roundTimerReset();
-  overall_timer = 0;
+  round_counter = -1;
+  overall_timer = 0; //need to compensate and overshoot
 
   //refresh the interval stuff
   //starts the second all over again
-  clearInterval(timerRefreshID);
-  timerRefreshID = setInterval(increment_timers ,1000);
+
 }
 
 
