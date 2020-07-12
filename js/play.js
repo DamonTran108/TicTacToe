@@ -64,7 +64,7 @@ createBtns();
 //setTimeout(function, milliseconds)
 //setInterval(function, milliseconds)
 
-setInterval(increment_timers ,1000) //process the function every second
+var timerRefreshID = setInterval(increment_timers ,1000) //process the function every second
 
 
 
@@ -99,6 +99,10 @@ function reset()
   turnCount = 0;
   currentPlayer = playerList[0];
   winConArr = [];
+
+  //timers
+  hardTimerReset()
+
   console.log(winConArr)
 
 }
@@ -161,32 +165,6 @@ update_game();
 
   this.drawTimers();
   this.drawHUD();
-
-  if(winner !=null)
-  {
-
-    text(winner.getName() + " WINS!", grid.getXpos()+300, grid.getYpos()); //DRAW
-
-
-    //Presets
-    fill(currentPlayer.getColor());
-    textSize(128);
-    rematchBtn.show();
-    surrBtn.hide();
-  }else{
-    rematchBtn.hide();
-    surrBtn.show();
-
-    if(turnCount == grid.getRowLength() * grid.getColLength() && winner==null){
-
-      text("Draw", grid.getXpos()+300, grid.getYpos());
-      fill(currentPlayer.getColor());
-      textSize(128);
-      surrBtn.hide();
-      rematchBtn.show();
-    }
-
-  }
 
 
 
@@ -257,7 +235,7 @@ function update_game()
 
   //Check round timer
   //if (check_round_timer())
-    //{resetTimers();}
+    //{s();}
 
 }
 
@@ -337,6 +315,11 @@ function checkTilesForWinCon()
 
 
 
+
+}
+
+function endGameStuff()
+{
 
 }
 
@@ -744,7 +727,7 @@ function increment_timers()
 
 
   if (check_round_timer())
-    {resetTimers();}
+    {roundTimerReset();}
 
 }
 
@@ -823,11 +806,21 @@ function convert_time(input_seconds)
   return output;
 }
 
-function resetTimers()
+function roundTimerReset()
 {
-  round_counter = 0;
+  round_counter = -1;
 }
 
+function hardTimerReset()
+{
+  roundTimerReset();
+  overall_timer = 0;
+
+  //refresh the interval stuff
+  //starts the second all over again
+  clearInterval(timerRefreshID);
+  timerRefreshID = setInterval(increment_timers ,1000);
+}
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -836,9 +829,38 @@ function resetTimers()
 
 function drawHUD()
 {
-  //Maybe get some text wrap
 
-  //text border stuff
+
+  //Draws name above the board of the current player
+  //If game is over will draw "player x has won" instead
+
+  if(winner !=null) //PLATER WINS
+  {
+    drawGameWinHUD();
+
+  }
+  else if (turnCount == grid.getRowLength() * grid.getColLength() && winner==null)//DRAW
+  {
+      text("Draw", grid.getXpos()+300, grid.getYpos());
+      fill(currentPlayer.getColor());
+      textSize(128);
+      surrBtn.hide();
+      rematchBtn.show();
+
+  }
+  else //DEFAULT GAME STILL RUNNING
+  {
+    drawCurrentPlayer();
+  }
+
+
+
+
+
+}
+
+function drawCurrentPlayer()
+{
   stroke(255);//color
   strokeWeight(5);
 
@@ -867,8 +889,15 @@ function drawHUD()
   text(symbol_s,player_text_x - symbol_text_off,player_text_y);
   text(symbol_s,player_text_x + symbol_text_off + player_text_width,player_text_y);
   //text(symbol_s,(player_text_x + player_text_width + symbol_text_off),player_text_y);
+}
 
+function drawGameWinHUD()
+{
+  text(winner.getName() + " Wins" , grid.getXpos()+300, grid.getYpos()); //DRAW
 
-
-
+  //Presets
+  fill(currentPlayer.getColor());
+  textSize(128);
+  rematchBtn.show();
+  surrBtn.hide();
 }
