@@ -130,12 +130,26 @@ for(let i = 0; i < playerList.length; i++)
   console.log(winner + " - " +" Symbol: " + winningState +  " WINS");
 }
 
+//could make toggle, but easier
+function disableButton(input_btn)
+{
+  input_btn.attribute('disabled', '');
+}
+
+function enableButton(input_btn)
+{
+  input_btn.removeAttribute('disabled');
+}
+
 function createBtns()
 {
   resetBtn = createButton("Reset");
   resetBtn.mouseClicked(reset);
   resetBtn.position(100,700);
   resetBtn.size(100,100);
+
+  disableButton(resetBtn);
+  enableButton(resetBtn);
 
   surrBtn = createButton("Surrender");
   surrBtn.mouseClicked(surrender);
@@ -146,7 +160,7 @@ function createBtns()
   rematchBtn.mouseClicked(reset);
   rematchBtn.position(grid.getXpos()+700,grid.getYpos()+100);
   rematchBtn.size(100,100);
-  rematchBtn.hide();
+  disableButton(rematchBtn);
 
 
 }
@@ -857,8 +871,9 @@ function drawHUD()
       text("Draw", grid.getXpos()+300, grid.getYpos());
       fill(currentPlayer.getColor());
       textSize(128);
-      surrBtn.hide();
-      rematchBtn.show();
+      disableButton(surrBtn);
+      disableButton(resetBtn);
+      enableButton(rematchBtn);
 
   }
   else //DEFAULT GAME STILL RUNNING
@@ -911,6 +926,7 @@ function drawGameWinHUD()
   //Presets
   fill(currentPlayer.getColor());
   textSize(128);
-  rematchBtn.show();
-  surrBtn.hide();
+  enableButton(rematchBtn.show());
+  disableButton(resetBtn);
+  disableButton(surrBtn);
 }
