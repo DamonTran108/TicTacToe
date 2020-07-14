@@ -913,8 +913,6 @@ function drawCurrentPlayer()
 
   let symbol_s = currentPlayer.getSymbol(); //new string to to keep everything seperate
 
-  //let player_text_height = textAscent(s);
-
   fill(currentPlayer.getColor());
   textSize(96);
 
@@ -927,7 +925,7 @@ function drawCurrentPlayer()
 function drawGameWinHUD()
 {
 
-  stroke(0);//color
+  stroke(255);//color
   strokeWeight(5);
   //text presets
   fill(0);
@@ -935,10 +933,11 @@ function drawGameWinHUD()
   textAlign(CENTER);
 
   //max_g_length/2
-  text(winner.getName() + " Wins" , grid_cen, grid.getYpos()-25); //DRAW
+  text(winner.getName() + " Wins" , grid_cen, grid.getYpos()-50); //DRAW
 
   //Presets
   fill(currentPlayer.getColor());
+
   textSize(128);
   enableButton(rematchBtn);
   disableButton(resetBtn);
