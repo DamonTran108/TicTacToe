@@ -12,7 +12,7 @@ let canvasWidth, canvasHeight = 0;
 let grid_pos_x , grid_pos_y = 0;
 
 let max_g_length = 500; //how long the grid can be, used to dynamically resize the tiles
-
+let grid_cen = 0;
 let win = false;
 let isSimple = true;
 
@@ -57,7 +57,6 @@ createCanvas(canvasWidth, canvasHeight);
 
 grid_pos_x = canvasWidth/2 - max_g_length/2;
 grid_pos_y = canvasHeight/2 - max_g_length/2;
-
 background(255,0,0);
 
 createAssets(); //get stuff from html
@@ -70,7 +69,7 @@ createBtns();
 timerRefreshID = setInterval(increment_timers ,1000) //process the function every second
 
 
-
+grid_cen = grid.getXpos()+max_g_length/2;
 currentPlayer = playerList[0]; //INITIAL
 currentPlayer = playerList[(turnCount % 2)];
 console.log(playerList);
@@ -103,8 +102,13 @@ function reset()
   currentPlayer = playerList[0];
   winConArr = [];
 
+
+  //assada
   //timers
-  hardTimerReset()
+  hardTimerReset();
+  disableButton(rematchBtn);
+  enableButton(resetBtn);
+  enableButton(surrBtn);
 
   console.log(winConArr)
 
@@ -148,8 +152,8 @@ function createBtns()
   resetBtn.position(100,700);
   resetBtn.size(100,100);
 
-  disableButton(resetBtn);
-  enableButton(resetBtn);
+  //disableButton(resetBtn);
+  //enableButton(resetBtn);
 
   surrBtn = createButton("Surrender");
   surrBtn.mouseClicked(surrender);
@@ -764,6 +768,7 @@ function drawTimers()
   strokeWeight(5);
   fill(0);
   textSize(72);
+  textAlign(LEFT);
 
 
 
@@ -889,44 +894,53 @@ function drawHUD()
 
 function drawCurrentPlayer()
 {
+
   stroke(255);//color
   strokeWeight(5);
-
+  textAlign(CENTER);
 
   //text presets
   fill(currentPlayer.getColor());
-  textSize(72);
+  textSize(64);
 
-  let s = (currentPlayer.getName() + "  turn");
-  let player_text_x = 700; //used to 'stick' the symbol to the front of text
-  let player_text_y = 150;
+  let grid_cen = grid.getXpos()+max_g_length/2;
+  let s = (currentPlayer.getName());// + "turn");
+  let text_y_pos = grid.getYpos() - 50; //change number at the end to adjust distance
 
-  text(s, player_text_x, player_text_y); //DRAW
+  text(s, grid.getXpos()+max_g_length/2, text_y_pos); //DRAW
 
 
-  //Presets
-  fill(currentPlayer.getColor());
-  textSize(128);
 
   let symbol_s = currentPlayer.getSymbol(); //new string to to keep everything seperate
-  let player_text_width = textWidth(s)/2;
-  //let player_text_height = textAscent(s);
-  let symbol_text_off = textWidth(symbol_s);
 
-  //draw symbols either side
-  text(symbol_s,player_text_x - symbol_text_off,player_text_y);
-  text(symbol_s,player_text_x + symbol_text_off + player_text_width,player_text_y);
+  //let player_text_height = textAscent(s);
+
+  fill(currentPlayer.getColor());
+  textSize(96);
+
+  //draw symbols either side of grid
+  text(symbol_s,grid.getXpos(),text_y_pos);
+  text(symbol_s,grid.getXpos() + max_g_length,text_y_pos);
   //text(symbol_s,(player_text_x + player_text_width + symbol_text_off),player_text_y);
 }
 
 function drawGameWinHUD()
 {
-  text(winner.getName() + " Wins" , grid.getXpos()+300, grid.getYpos()); //DRAW
+
+  stroke(0);//color
+  strokeWeight(5);
+  //text presets
+  fill(0);
+  textSize(72);
+  textAlign(CENTER);
+
+  //max_g_length/2
+  text(winner.getName() + " Wins" , grid_cen, grid.getYpos()-25); //DRAW
 
   //Presets
   fill(currentPlayer.getColor());
   textSize(128);
-  enableButton(rematchBtn.show());
+  enableButton(rematchBtn);
   disableButton(resetBtn);
   disableButton(surrBtn);
 }
